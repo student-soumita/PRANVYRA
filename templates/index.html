@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRANVYRA — Every Breath. A Better Tomorrow.</title>
+  <meta name="description" content="AI-Powered Urban Air Intelligence & Sustainable Lifestyle Assistant. Hyperlocal air quality, intelligent commute optimization, indoor air health, and measurable environmental impact.">
+  <link rel="icon" type="image/svg+xml" href="/static/assets/logo.svg">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Leaflet Map CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  
+  <!-- Core & Component CSS -->
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/modules.css">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  
+  <!-- Leaflet Map JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+</head>
+<body class="theme-dark" data-active-view="overview">
+  
+  <!-- Cosmic Starfield & Atmospheric Nebula Glows -->
+  <div class="cosmic-starfield"></div>
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+
+  <!-- Main Application Wrapper -->
+  <div class="app-layout">
+    
+    <!-- Collapsible Sidebar Navigation -->
+    <aside class="app-sidebar" id="appSidebar">
+      <div class="sidebar-header">
+        <a href="#overview" class="brand-link" data-nav="overview">
+          <img src="/static/assets/logo.svg" alt="PRANVYRA Logo" class="brand-logo">
+          <div class="brand-meta">
+            <span class="brand-title" data-i18n="brand_name">PRANVYRA</span>
+            <span class="brand-tagline" data-i18n="brand_tagline">Air Intelligence</span>
+          </div>
+        </a>
+        <button class="icon-btn mobile-close-btn" id="sidebarCloseBtn" aria-label="Close Navigation">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-label" data-i18n="nav_intelligence_modules">Intelligence Modules</div>
+        <a href="#overview" class="nav-item active" data-nav="overview">
+          <i data-lucide="home"></i>
+          <span data-i18n="nav_home">Home</span>
+        </a>
+        <a href="#dashboard" class="nav-item" data-nav="dashboard">
+          <i data-lucide="gauge"></i>
+          <span data-i18n="nav_dashboard">Air Intelligence</span>
+        </a>
+        <a href="#assistant" class="nav-item" data-nav="assistant">
+          <i data-lucide="bot"></i>
+          <span data-i18n="nav_assistant">AI Companion</span>
+          <span class="badge-pill">Core</span>
+        </a>
+        <a href="#planner" class="nav-item" data-nav="planner">
+          <i data-lucide="calendar-check"></i>
+          <span data-i18n="nav_planner">Daily Planner</span>
+        </a>
+        <a href="#indoor" class="nav-item" data-nav="indoor">
+          <i data-lucide="door-closed"></i>
+          <span data-i18n="nav_indoor">Indoor Air</span>
+        </a>
+
+        <div class="nav-section-label" data-i18n="nav_decisions_action">Decisions & Action</div>
+        <a href="#breathroute" class="nav-item" data-nav="breathroute">
+          <i data-lucide="navigation"></i>
+          <span data-i18n="nav_breathroute">BreathRoute</span>
+          <span class="badge-pill new">New</span>
+        </a>
+        <a href="#lifeswitch" class="nav-item" data-nav="lifeswitch">
+          <i data-lucide="repeat"></i>
+          <span data-i18n="nav_lifeswitch">Life-Switch</span>
+        </a>
+        <a href="#impact" class="nav-item" data-nav="impact">
+          <i data-lucide="receipt"></i>
+          <span data-i18n="nav_impact">Impact Tracker</span>
+        </a>
+        <a href="#community" class="nav-item" data-nav="community">
+          <i data-lucide="activity"></i>
+          <span data-i18n="nav_community">Neighborhood Pulse</span>
+        </a>
+
+        <div class="nav-section-label" data-i18n="nav_identity_science">Identity & Science</div>
+        <a href="#airtwin" class="nav-item" data-nav="airtwin">
+          <i data-lucide="user-check"></i>
+          <span data-i18n="nav_airtwin">Air-Twin Profile</span>
+        </a>
+        <a href="#pollution-guide" class="nav-item" data-nav="pollution-guide">
+          <i data-lucide="book-open"></i>
+          <span data-i18n="nav_pollution_guide">Pollution Guide</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-chip" id="sidebarUserChip">
+          <div class="avatar-circle" id="userAvatar">UC</div>
+          <div class="user-info">
+            <span class="user-name" id="sidebarUserName">Citizen Explorer</span>
+            <span class="user-points" id="sidebarUserPoints"><i data-lucide="sparkles"></i> 0 pts</span>
+          </div>
+          <button class="icon-btn sidebar-logout-btn" id="sidebarLogoutBtn" title="Sign Out" aria-label="Sign Out" data-i18n-title="auth_logout">
+            <i data-lucide="log-out"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <div class="app-main">
+      
+      <!-- Top Persistent Action Bar -->
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <button class="icon-btn mobile-menu-toggle" id="sidebarOpenBtn" aria-label="Toggle Navigation">
+            <i data-lucide="menu"></i>
+          </button>
+          
+          <!-- Open-Access Location Selector -->
+          <div class="city-selector-wrap" id="topbarLocationBtn" title="Click to change location or detect geolocation">
+            <i data-lucide="map-pin" class="city-icon"></i>
+            <span class="current-city-text" id="topbarCityName" data-i18n="topbar_select_location">Select Your Location</span>
+            <button class="city-dropdown-btn" id="citySearchToggleBtn">
+              <i data-lucide="chevron-down"></i>
+            </button>
+            
+            <!-- City Search Flyout -->
+            <div class="city-search-flyout" id="citySearchFlyout">
+              <div class="search-actions-row">
+                <button class="btn btn-primary btn-sm btn-block" id="detectLocationBtn">
+                  <i data-lucide="crosshair"></i>
+                  <span data-i18n="topbar_detect_location">Use My Current Location</span>
+                </button>
+              </div>
+              <div class="search-input-box">
+                <i data-lucide="search"></i>
+                <input type="text" id="citySearchInput" data-i18n-placeholder="topbar_search_placeholder" placeholder="Enter city, locality or postal code...">
+              </div>
+              <div class="city-quick-chips">
+                <span class="quick-chip" data-city="New Delhi" data-lat="28.6139" data-lon="77.2090">New Delhi</span>
+                <span class="quick-chip" data-city="Bengaluru" data-lat="12.9716" data-lon="77.5946">Bengaluru</span>
+                <span class="quick-chip" data-city="Mumbai" data-lat="19.0760" data-lon="72.8777">Mumbai</span>
+                <span class="quick-chip" data-city="Kolkata" data-lat="22.5726" data-lon="88.3639">Kolkata</span>
+                <span class="quick-chip" data-city="London" data-lat="51.5074" data-lon="-0.1278">London</span>
+                <span class="quick-chip" data-city="New York" data-lat="40.7128" data-lon="-74.0060">New York</span>
+              </div>
+              <div class="city-results-list" id="cityResultsList"></div>
+            </div>
+          </div>
+
+          <!-- Live AQI Quick Badge -->
+          <div class="quick-aqi-pill" id="topbarAqiPill" style="display: none;">
+            <span class="dot-indicator" id="topbarAqiDot"></span>
+            <span class="pill-label">AQI <strong id="topbarAqiValue">--</strong></span>
+            <span class="pill-cat" id="topbarAqiCat">Loading...</span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <!-- Bhasha-Air Language Switcher -->
+          <div class="bhasha-switcher" id="bhashaSwitcher" title="Select Bhasha-Air AI Language">
+            <span class="bhasha-label"><i data-lucide="languages"></i></span>
+            <button class="bhasha-btn active" data-lang="en">EN</button>
+            <button class="bhasha-btn" data-lang="hi">हिंदी</button>
+            <button class="bhasha-btn" data-lang="bn">বাংলা</button>
+          </div>
+
+          <!-- Theme Toggle -->
+          <button class="icon-btn theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle Dark/Light Mode">
+            <i data-lucide="sun" id="themeIcon"></i>
+          </button>
+
+          <!-- Sign Out Button -->
+          <button class="icon-btn logout-btn" id="topbarLogoutBtn" title="Sign Out" aria-label="Sign Out" data-i18n-title="auth_logout">
+            <i data-lucide="log-out"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Content Dynamic Panels -->
+      <main class="app-content-body">
+        
+        <!-- ============================================== -->
+        <!-- VIEW 1: HOME / LANDING PAGE                    -->
+        <!-- ============================================== -->
+        <section class="view-panel active" id="view-overview">
+          <div class="hero-banner glass-card">
+            <div class="hero-content">
+              <div class="hero-badge">
+                <i data-lucide="shield-check"></i>
+                <span data-i18n="hero_badge">Open-Access Environmental Intelligence</span>
+              </div>
+              <h1 class="hero-headline">
+                <span data-i18n="hero_headline_1">Your City Has an Air Story.</span><br>
+                <span class="text-gradient" data-i18n="hero_headline_2">Let's Change Its Ending.</span>
+              </h1>
+              <p class="hero-subtext" data-i18n="hero_subtext">
+                Understand the air around you. Discover smarter daily choices. Build a cleaner tomorrow.
+              </p>
+              
+              <!-- Direct Open-Access Onboarding Bar -->
+              <div class="open-access-bar">
+                <div class="onboard-input-wrap">
+                  <i data-lucide="search"></i>
+                  <input type="text" id="heroLocationInput" data-i18n-placeholder="hero_input_placeholder" placeholder="Enter your city, locality or postal code...">
+                  <button class="btn btn-primary" id="heroExploreAqiBtn">
+                    <i data-lucide="compass"></i>
+                    <span data-i18n="hero_btn_explore">Explore My Air</span>
+                  </button>
+                </div>
+                <div class="onboard-geo-row">
+                  <button class="btn-text btn-geo" id="heroGeolocateBtn">
+                    <i data-lucide="crosshair"></i> <span data-i18n="hero_btn_autodetect">Auto-Detect My Current Location</span>
+                  </button>
+                  <button class="btn-text" id="heroHowItWorksBtn">
+                    <i data-lucide="info"></i> <span data-i18n="hero_btn_how">Discover How It Works</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="hero-stats-row">
+                <div class="hero-stat">
+                  <span class="stat-number" data-i18n="hero_stat_open">100% Open</span>
+                  <span class="stat-desc" data-i18n="hero_stat_open_desc">Zero Mandatory Logins</span>
+                </div>
+                <div class="hero-stat-sep"></div>
+                <div class="hero-stat">
+                  <span class="stat-number" data-i18n="hero_stat_sources">Copernicus CAMS</span>
+                  <span class="stat-desc" data-i18n="hero_stat_sources_desc">Real Atmospheric Data</span>
+                </div>
+                <div class="hero-stat-sep"></div>
+                <div class="hero-stat">
+                  <span class="stat-number" data-i18n="hero_stat_defra">UK DEFRA / EPA</span>
+                  <span class="stat-desc" data-i18n="hero_stat_defra_desc">Transparent Emissions Factors</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Live Snapshot Widget -->
+            <div class="hero-live-widget" id="heroLiveWidget">
+              <div class="widget-header">
+                <span class="live-tag"><span class="pulse-ring"></span> Hyperlocal Snapshot</span>
+                <span class="location-tag" id="heroWidgetCity">Detecting Location...</span>
+              </div>
+              <div class="widget-main">
+                <div class="aqi-circle-wrap">
+                  <div class="aqi-big-val" id="heroWidgetAqi">--</div>
+                  <div class="aqi-circle-label">US EPA AQI</div>
+                </div>
+                <div class="widget-info">
+                  <div class="aqi-status-badge badge-warning" id="heroWidgetCategory">Awaiting Location</div>
+                  <p class="widget-pollutant" id="heroWidgetPollutant">Enter your location to stream live atmospheric data.</p>
+                  <p class="widget-action-snippet" id="heroWidgetAction">
+                    "Adaptive recommendations will formulate upon location selection."
+                  </p>
+                </div>
+              </div>
+              <div class="widget-footer">
+                <button class="btn-text" id="heroWidgetGoDashboard">Open Full Air Intelligence Dashboard &rarr;</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Philosophy: 5 Questions Answered -->
+          <div class="philosophy-section" id="howItWorksSection">
+            <div class="section-title-wrap">
+              <span class="sub-heading" data-i18n="how_eyebrow">Platform Intelligence Cycle</span>
+              <h2 class="section-heading" data-i18n="how_heading">Don't Just Show Pollution. Help People Act Against It.</h2>
+              <p class="section-subtext" data-i18n="how_subtext">PRANVYRA takes real atmospheric observations, understands your routine, and turns it into measurable personal impact:</p>
+            </div>
+
+            <div class="questions-grid">
+              <div class="question-card glass-card">
+                <div class="q-number">01</div>
+                <div class="q-icon"><i data-lucide="gauge"></i></div>
+                <h3>What is the air around me right now?</h3>
+                <p>Live satellite & surface assimilated concentrations of PM2.5, PM10, NO₂, O₃, CO, and SO₂ with WHO limits.</p>
+              </div>
+
+              <div class="question-card glass-card">
+                <div class="q-number">02</div>
+                <div class="q-icon"><i data-lucide="user-check"></i></div>
+                <h3>How does it affect my daily activities?</h3>
+                <p>Air-Twin adaptive intelligence estimates personal inhalation exposure based on your specific transport and outdoor routine.</p>
+              </div>
+
+              <div class="question-card glass-card">
+                <div class="q-number">03</div>
+                <div class="q-icon"><i data-lucide="navigation"></i></div>
+                <h3>What should I change in my travel today?</h3>
+                <p>BreathRoute journey planner calculates route emissions and shields your lungs from toxic rush-hour traffic corridors.</p>
+              </div>
+
+              <div class="question-card glass-card">
+                <div class="q-number">04</div>
+                <div class="q-icon"><i data-lucide="door-closed"></i></div>
+                <h3>How can I protect air inside my home?</h3>
+                <p>My Indoor Air Check audits cooking exhaust discipline, midday window cross-drafts, and true HEPA filtration.</p>
+              </div>
+
+              <div class="question-card glass-card">
+                <div class="q-number">05</div>
+                <div class="q-icon"><i data-lucide="receipt"></i></div>
+                <h3>How much emissions can I avoid?</h3>
+                <p>Life-Switch decision engine issues an official Personal Impact Receipt proving your verified carbon avoidance.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- VIEW 2: AIR INTELLIGENCE DASHBOARD             -->
+        <!-- ============================================== -->
+        <section class="view-panel" id="view-dashboard">
+          
+          <!-- Unavailable Data Warning Banner (Honest Open Data) -->
+          <div class="unavailable-banner glass-card" id="dashUnavailableBanner" style="display: none;">
+            <div class="banner-icon"><i data-lucide="alert-triangle"></i></div>
+            <div class="banner-content">
+              <strong>Atmospheric Data Temporarily Unreachable:</strong>
+              <p id="dashUnavailableMessage">The satellite/station feed for this location is currently unavailable. Please verify your connection or select another city.</p>
+            </div>
+          </div>
+
+          <!-- Dashboard Control Header -->
+          <div class="dashboard-meta-bar">
+            <div class="meta-left">
+              <h2 class="view-title" data-i18n="dash_title">Hyperlocal Environmental Intelligence</h2>
+              <div class="data-provenance">
+                <span class="source-badge" id="dashDataSource"><i data-lucide="database"></i> Open-Meteo CAMS Global Model</span>
+                <span class="timestamp-badge" id="dashLastUpdated"><i data-lucide="clock"></i> Live Feed</span>
+                <span class="standard-badge" data-i18n="dash_aqi_scale_label"><i data-lucide="scale"></i> US EPA AQI Standard (40 CFR Part 58)</span>
+              </div>
+            </div>
+            <div class="meta-actions">
+              <button class="btn btn-outline btn-sm" id="refreshDashboardBtn">
+                <i data-lucide="rotate-cw"></i>
+                <span data-i18n="dash_refresh_btn">Refresh Live Data</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Key Intelligence Row -->
+          <div class="grid-3-col">
+            
+            <!-- AQI Hero Card -->
+            <div class="card glass-card aqi-hero-card">
+              <div class="card-header-simple">
+                <span class="card-eyebrow" data-i18n="dash_ambient_aqi">Ambient Air Quality</span>
+                <span class="aqi-category-pill" id="dashAqiCatPill">--</span>
+              </div>
+              <div class="aqi-display-row">
+                <div class="aqi-value-large" id="dashAqiValue">--</div>
+                <div class="aqi-scale-summary">
+                  <div class="aqi-scale-title" data-i18n="dash_epa_standard">US EPA Standard</div>
+                  <div class="aqi-risk-desc" id="dashAqiHealthAdvice">
+                    Select a location to stream verified atmospheric conditions.
+                  </div>
+                </div>
+              </div>
+              <div class="aqi-spectrum-track">
+                <div class="spectrum-bar"></div>
+                <div class="spectrum-marker" id="aqiSpectrumMarker" style="left: 0%;"></div>
+              </div>
+              <div class="spectrum-labels">
+                <span>0 Good</span>
+                <span>50</span>
+                <span>100</span>
+                <span>150</span>
+                <span>200</span>
+                <span>300+ Haz</span>
+              </div>
+            </div>
+
+            <!-- AIRWISE Next Best Action -->
+            <div class="card glass-card airwise-action-card">
+              <div class="card-header-simple">
+                <span class="card-eyebrow" data-i18n="dash_airwise_eyebrow"><i data-lucide="sparkles"></i> AIRWISE Engine</span>
+                <span class="badge-priority high" id="airwiseUrgency">Next Best Action</span>
+              </div>
+              <h3 class="airwise-title" id="airwiseTitle" data-i18n="dash_airwise_title">AIRWISE — Your Next Best Action</h3>
+              <p class="airwise-problem" id="airwiseProblem">
+                Awaiting active atmospheric data stream.
+              </p>
+              <div class="airwise-action-box">
+                <div class="action-icon"><i data-lucide="shield-alert"></i></div>
+                <div class="action-text" id="airwiseActionText">
+                  Select your city above to calculate immediate exposure mitigation.
+                </div>
+              </div>
+              <div class="airwise-footer">
+                <span class="airwise-benefit" id="airwiseBenefit"><i data-lucide="check-circle-2"></i> Targeted health & carbon benefit</span>
+                <span class="airwise-confidence" id="airwiseConfidence">Grounded Model</span>
+              </div>
+            </div>
+
+            <!-- Breath Budget Gauge -->
+            <div class="card glass-card breath-budget-card">
+              <div class="card-header-simple">
+                <span class="card-eyebrow" data-i18n="dash_budget_eyebrow"><i data-lucide="shield"></i> Breath Budget</span>
+                <span class="budget-status-pill" id="dashBudgetStatusPill">Exposure Indicator</span>
+              </div>
+              <div class="budget-meter-wrap">
+                <div class="budget-circle">
+                  <div class="budget-percent" id="dashBudgetPct">--</div>
+                  <div class="budget-sub" data-i18n="dash_budget_consumed">Consumed</div>
+                </div>
+                <div class="budget-details">
+                  <div class="detail-line">
+                    <span data-i18n="dash_budget_outdoor_hrs">Outdoor Duration:</span>
+                    <strong id="dashBudgetOutdoorHrs">1-2 hrs / day</strong>
+                  </div>
+                  <div class="detail-line">
+                    <span data-i18n="dash_budget_commute_mult">Commute Multiplier:</span>
+                    <strong id="dashBudgetTransportMode">Transit</strong>
+                  </div>
+                  <div class="detail-line">
+                    <span data-i18n="dash_budget_remaining">Remaining Safe Budget:</span>
+                    <strong id="dashBudgetRemaining">--</strong>
+                  </div>
+                </div>
+              </div>
+              <p class="budget-summary-text" id="dashBudgetSummary" data-i18n="dash_budget_desc">
+                Estimated cumulative inhalation intake based on your routine and transit mode.
+              </p>
+              <div class="scientific-note">
+                <i data-lucide="info"></i>
+                <span data-i18n="dash_budget_disclaimer">Educational estimate. Not a clinical measurement or medical advice.</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Weather Ribbon -->
+          <div class="weather-ribbon glass-card">
+            <div class="weather-item">
+              <div class="w-icon"><i data-lucide="thermometer"></i></div>
+              <div class="w-meta">
+                <span class="w-label" data-i18n="weather_temp">Temperature</span>
+                <span class="w-val" id="weatherTemp">--</span>
+              </div>
+            </div>
+            <div class="weather-item">
+              <div class="w-icon"><i data-lucide="droplets"></i></div>
+              <div class="w-meta">
+                <span class="w-label" data-i18n="weather_humidity">Relative Humidity</span>
+                <span class="w-val" id="weatherHumidity">--</span>
+              </div>
+            </div>
+            <div class="weather-item">
+              <div class="w-icon"><i data-lucide="wind"></i></div>
+              <div class="w-meta">
+                <span class="w-label" data-i18n="weather_wind">Wind Speed</span>
+                <span class="w-val" id="weatherWind">--</span>
+              </div>
+            </div>
+            <div class="weather-item">
+              <div class="w-icon"><i data-lucide="compass"></i></div>
+              <div class="w-meta">
+                <span class="w-label" data-i18n="weather_direction">Wind Direction</span>
+                <span class="w-val" id="weatherWindDir">--</span>
+              </div>
+            </div>
+            <div class="weather-item">
+              <div class="w-icon"><i data-lucide="cloud-sun" id="weatherConditionIcon"></i></div>
+              <div class="w-meta">
+                <span class="w-label" data-i18n="weather_conditions">Conditions</span>
+                <span class="w-val" id="weatherDesc">--</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6 Pollutant Matrix -->
+          <div class="section-title-wrap text-left">
+            <h3 class="section-heading-sm" data-i18n="dash_pollutants_title">The Six Key Ambient Pollutants</h3>
+            <p class="section-subtext" data-i18n="dash_pollutants_subtitle">Real-time concentrations compared to World Health Organization (WHO) 24-hour guidelines:</p>
+          </div>
+
+          <div class="pollutants-grid">
+            <div class="pollutant-card glass-card" id="polCardPm25">
+              <div class="pol-header">
+                <span class="pol-formula">PM<sub>2.5</sub></span>
+                <span class="pol-badge warning" data-i18n="pol_badge_fine">Fine Particulate</span>
+              </div>
+              <div class="pol-val-row">
+                <span class="pol-number" id="polValPm25">--</span>
+                <span class="pol-unit">µg/m³</span>
+              </div>
+              <div class="pol-name" data-i18n="pol_fine_particulate">Fine Particulates (&le;2.5µm)</div>
+              <div class="pol-bar-wrap"><div class="pol-progress-bar" id="polBarPm25" style="width: 0%;"></div></div>
+              <div class="pol-footer-note" data-i18n="pol_who_pm25">WHO 24h Guideline: 15 µg/m³</div>
+            </div>
+
+            <div class="pollutant-card glass-card" id="polCardPm10">
+              <div class="pol-header">
+                <span class="pol-formula">PM<sub>10</sub></span>
+                <span class="pol-badge moderate" data-i18n="pol_badge_inhalable">Inhalable</span>
+              </div>
+              <div class="pol-val-row">
+                <span class="pol-number" id="polValPm10">--</span>
+                <span class="pol-unit">µg/m³</span>
+              </div>
+              <div class="pol-name" data-i18n="pol_inhalable_coarse">Coarse Dust (&le;10µm)</div>
+              <div class="pol-bar-wrap"><div class="pol-progress-bar" id="polBarPm10" style="width: 0%;"></div></div>
+              <div class="pol-footer-note" data-i18n="pol_who_pm10">WHO 24h Guideline: 45 µg/m³</div>
+            </div>
+
+            <div class="pollutant-card glass-card" id="polCardNo2">
+              <div class="pol-header">
+                <span class="pol-formula">NO<sub>2</sub></span>
+                <span class="pol-badge moderate" data-i18n="pol_badge_combustion">Combustion</span>
+              </div>
+              <div class="pol-val-row">
+                <span class="pol-number" id="polValNo2">--</span>
+                <span class="pol-unit">µg/m³</span>
+              </div>
+              <div class="pol-name" data-i18n="pol_nitrogen_dioxide">Nitrogen Dioxide</div>
+              <div class="pol-bar-wrap"><div class="pol-progress-bar" id="polBarNo2" style="width: 0%;"></div></div>
+              <div class="pol-footer-note" data-i18n="pol_who_no2">WHO 24h Guideline: 25 µg/m³</div>
+            </div>
+
+            <div class="pollutant-card glass-card" id="polCardO3">
+              <div class="pol-header">
+                <span class="pol-formula">O<sub>3</sub></span>
+                <span class="pol-badge good" data-i18n="pol_badge_photo">Photochemical</span>
+              </div>
+              <div class="pol-val-row">
+                <span class="pol-number" id="polValO3">--</span>
+                <span class="pol-unit">µg/m³</span>
+              </div>
+              <div class="pol-name" data-i18n="pol_ozone">Ground-Level Ozone</div>
+              <div class="pol-bar-wrap"><div class="pol-progress-bar" id="polBarO3" style="width: 0%;"></div></div>
+              <div class="pol-footer-note" data-i18n="pol_who_o3">WHO 8h Guideline: 100 µg/m³</div>
+            </div>
+
+            <div class="pollutant-card glass-card" id="polCardCo">
+              <div class="pol-header">
+                <span class="pol-formula">CO</span>
+                <span class="pol-badge good" data-i18n="pol_badge_incomplete">Incomplete Burn</span>
+              </div>
+              <div class="pol-val-row">
+                <span class="pol-number" id="polValCo">--</span>
+                <span class="pol-unit">µg/m³</span>
+              </div>
+              <div class="pol-name" data-i18n="pol_carbon_monoxide">Carbon Monoxide</div>
+              <div class="pol-bar-wrap"><div class="pol-progress-bar" id="polBarCo" style="width: 0%;"></div></div>
+              <div class="pol-footer-note" data-i18n="pol_who_co">WHO 24h Guideline: 4000 µg/m³</div>
+            </div>
+
+            <div class="pollutant-card glass-card" id="polCardSo2">
+              <div class="pol-header">
+                <span class="pol-formula">SO<sub>2</sub></span>
+                <span class="pol-badge good" data-i18n="pol_badge_industrial">Industrial</span>
+              </div>
+              <div class="pol-val-row">
+                <span class="pol-number" id="polValSo2">--</span>
+                <span class="pol-unit">µg/m³</span>
+              </div>
+              <div class="pol-name" data-i18n="pol_sulphur_dioxide">Sulphur Dioxide</div>
+              <div class="pol-bar-wrap"><div class="pol-progress-bar" id="polBarSo2" style="width: 0%;"></div></div>
+              <div class="pol-footer-note" data-i18n="pol_who_so2">WHO 24h Guideline: 40 µg/m³</div>
+            </div>
+          </div>
+
+          <!-- Map & Trend Chart Row -->
+          <div class="grid-2-col map-charts-row">
+            <div class="card glass-card map-card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title"><i data-lucide="map"></i> <span data-i18n="dash_map_title">Hyperlocal Atmospheric Map</span></h3>
+                  <p class="card-subtitle" data-i18n="dash_map_subtitle">Real-time coordinates and regional dispersion</p>
+                </div>
+                <button class="btn btn-sm btn-outline" id="recenterMapBtn"><i data-lucide="crosshair"></i> <span data-i18n="dash_recenter_btn">Recenter</span></button>
+              </div>
+              <div id="airQualityMap" class="leaflet-map-container"></div>
+              <div class="map-legend">
+                <span class="legend-item"><span class="legend-dot" style="background: #16A88A;"></span> <span data-i18n="aqi_legend_good">Good (0-50)</span></span>
+                <span class="legend-item"><span class="legend-dot" style="background: #E7A83E;"></span> <span data-i18n="aqi_legend_moderate">Moderate (51-100)</span></span>
+                <span class="legend-item"><span class="legend-dot" style="background: #FF9800;"></span> <span data-i18n="aqi_legend_usg">USG (101-150)</span></span>
+                <span class="legend-item"><span class="legend-dot" style="background: #E46F65;"></span> <span data-i18n="aqi_legend_unhealthy">Unhealthy (151-200)</span></span>
+                <span class="legend-item"><span class="legend-dot" style="background: #8E24AA;"></span> <span data-i18n="aqi_legend_very_unhealthy">Very Unhealthy (200+)</span></span>
+              </div>
+            </div>
+
+            <div class="card glass-card chart-card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title"><i data-lucide="line-chart"></i> <span data-i18n="dash_trend_title">24-Hour Atmospheric Trajectory</span></h3>
+                  <p class="card-subtitle" data-i18n="dash_trend_subtitle">Diurnal cycle: inversion vs solar dispersion</p>
+                </div>
+                <div class="chart-toggles">
+                  <button class="btn-toggle active" data-chart-metric="aqi">AQI</button>
+                  <button class="btn-toggle" data-chart-metric="pm25">PM2.5</button>
+                  <button class="btn-toggle" data-chart-metric="pm10">PM10</button>
+                </div>
+              </div>
+              <div class="chart-wrapper">
+                <canvas id="hourlyTrendChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- VIEW 3: PRANVYRA INTELLIGENCE CORE             -->
+        <!-- ============================================== -->
+        <section class="view-panel" id="view-assistant">
+          <div class="chat-container glass-card">
+            
+            <div class="chat-header">
+              <div class="ai-identity">
+                <div class="ai-avatar">
+                  <img src="/static/assets/logo.svg" alt="PRANVYRA AI">
+                </div>
+                <div>
+                  <h3 class="ai-name" data-i18n="ai_header_title">PRANVYRA INTELLIGENCE</h3>
+                  <p class="ai-status" data-i18n="ai_header_subtitle">
+                    Environmental intelligence that thinks beyond AQI.
+                  </p>
+                </div>
+              </div>
+              <div class="chat-header-actions">
+                <button class="btn btn-outline btn-sm" id="clearChatBtn" data-i18n-title="ai_clear_btn" title="Clear Conversation">
+                  <i data-lucide="trash-2"></i>
+                  <span data-i18n="ai_clear_btn">Clear</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Multi-Role Expert Selector Bar -->
+            <div class="chat-role-selector-bar">
+              <div class="role-select-group">
+                <label for="expertRoleSelect" class="role-select-label" data-i18n="ai_expert_label">
+                  <i data-lucide="sparkles"></i> Expert Role:
+                </label>
+                <select id="expertRoleSelect" class="expert-select-dropdown">
+                  <option value="auto" data-i18n="ai_role_auto">Auto Expert Router (Recommended)</option>
+                  <option value="atmospheric_scientist" data-i18n="ai_role_atmo">Atmospheric Scientist</option>
+                  <option value="urban_mobility_expert" data-i18n="ai_role_mobility">Urban Mobility & Emission Expert</option>
+                  <option value="indoor_air_specialist" data-i18n="ai_role_indoor">Indoor Air Quality Specialist</option>
+                  <option value="sustainability_strategist" data-i18n="ai_role_sustain">Sustainability Strategist</option>
+                  <option value="environmental_analyst" data-i18n="ai_role_analyst">Environmental Research Analyst</option>
+                </select>
+              </div>
+              <div class="active-expert-badge" id="activeExpertIndicator">
+                <i data-lucide="cpu"></i>
+                <span id="activeExpertText">Auto Routing Active</span>
+              </div>
+            </div>
+
+            <!-- Quick Suggestion Starter Chips -->
+            <div class="quick-prompts-bar" id="chatQuickPromptsBar">
+              <button class="prompt-chip" data-i18n="ai_prompt_1" data-prompt="Analyze my local air quality and weather.">Analyze my local air quality and weather.</button>
+              <button class="prompt-chip" data-i18n="ai_prompt_2" data-prompt="Why is pollution increasing even if it's windy?">Why is pollution increasing even if it's windy?</button>
+              <button class="prompt-chip" data-i18n="ai_prompt_3" data-prompt="Find a cleaner commute option for today.">Find a cleaner commute option for today.</button>
+              <button class="prompt-chip" data-i18n="ai_prompt_4" data-prompt="How can I improve my indoor air when cooking?">How can I improve my indoor air when cooking?</button>
+              <button class="prompt-chip" data-i18n="ai_prompt_5" data-prompt="How can I reduce my household carbon footprint?">How can I reduce my household carbon footprint?</button>
+              <button class="prompt-chip" data-i18n="ai_prompt_6" data-prompt="Explain PM2.5 vs PM10 and scientific limitations.">Explain PM2.5 vs PM10 and scientific limitations.</button>
+            </div>
+
+            <!-- Messages Stream -->
+            <div class="chat-messages-scroll" id="chatMessages"></div>
+
+            <!-- Typing Indicator -->
+            <div class="typing-indicator" id="chatTypingIndicator" style="display: none;">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              <span data-i18n="ai_typing_text">PRANVYRA Intelligence Core is analyzing environmental telemetry...</span>
+            </div>
+
+            <!-- Input Row -->
+            <div class="chat-input-row">
+              <textarea id="chatInput" rows="1" data-i18n-placeholder="ai_input_placeholder" placeholder="Ask about air quality, commuting emissions, indoor ventilation, or sustainability..."></textarea>
+              <button class="btn btn-primary chat-send-btn" id="chatSendBtn" data-i18n-aria="ai_send_btn" aria-label="Send Message">
+                <i data-lucide="send"></i>
+              </button>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- VIEW 4: DAILY PLANNER                          -->
+        <!-- ============================================== -->
+        <section class="view-panel" id="view-planner">
+          <div class="planner-header glass-card">
+            <div class="planner-meta">
+              <span class="card-eyebrow" data-i18n="planner_eyebrow"><i data-lucide="calendar"></i> Smart Daily Routine</span>
+              <h2 class="view-title" data-i18n="planner_title">Personalized Environmental Action Plan</h2>
+              <p class="section-subtext" data-i18n="planner_subtitle">Calibrated to your location's AQI forecast, thermal inversion cycles, and your commute.</p>
+            </div>
+
+            <div class="planner-progress-box">
+              <div class="progress-meta">
+                <span>Daily Completion:</span>
+                <strong id="plannerCompletionPct">0%</strong>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" id="plannerProgressBar" style="width: 0%;"></div>
+              </div>
+              <div class="progress-sub" id="plannerTaskCount">0 actions completed today</div>
+            </div>
+
+            <div class="planner-actions">
+              <button class="btn btn-outline btn-sm" id="plannerRegenerateBtn">
+                <i data-lucide="sparkles"></i>
+                <span data-i18n="planner_regen_btn">Recalibrate for Current Air</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="planner-slots-grid">
+            <div class="planner-slot-column glass-card">
+              <div class="slot-header">
+                <div class="slot-title" data-i18n="planner_morning"><i data-lucide="sun-medium"></i> Morning (06:00 - 12:00)</div>
+                <span class="slot-badge">Inversion Phase</span>
+              </div>
+              <div class="slot-tasks-list" id="slotMorningTasks"></div>
+            </div>
+
+            <div class="planner-slot-column glass-card">
+              <div class="slot-header">
+                <div class="slot-title" data-i18n="planner_afternoon"><i data-lucide="sun"></i> Afternoon (12:00 - 17:00)</div>
+                <span class="slot-badge">Solar Dispersion</span>
+              </div>
+              <div class="slot-tasks-list" id="slotAfternoonTasks"></div>
+            </div>
+
+            <div class="planner-slot-column glass-card">
+              <div class="slot-header">
+                <div class="slot-title" data-i18n="planner_evening"><i data-lucide="moon"></i> Evening & Night (17:00 - 23:00)</div>
+                <span class="slot-badge">Infiltration Defense</span>
+              </div>
+              <div class="slot-tasks-list" id="slotEveningTasks"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- VIEW 5: INDOOR AIR INTELLIGENCE                -->
+        <!-- ============================================== -->
+        <section class="view-panel" id="view-indoor">
+          <div class="scientific-banner glass-card">
+            <div class="banner-icon"><i data-lucide="alert-circle"></i></div>
+            <div class="banner-content">
+              <strong>Scientific Transparency Disclaimer:</strong>
+              <p>PRANVYRA assesses residential air risks using building physics and environmental health criteria (ASHRAE 62.1/62.2, WHO guidelines). We do <em>not</em> claim to measure physical indoor air quality through a mobile phone or web browser without a certified external hardware sensor.</p>
+            </div>
+          </div>
+
+          <div class="grid-2-col indoor-layout">
+            <div class="card glass-card indoor-quiz-card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title" data-i18n="indoor_title"><i data-lucide="clipboard-check"></i> MY INDOOR AIR CHECK</h3>
+                  <p class="card-subtitle" data-i18n="indoor_subtitle">Personalized residential air quality audit</p>
+                </div>
+              </div>
+
+              <form id="indoorAuditForm" class="indoor-form">
+                <div class="form-group">
+                  <label data-i18n="indoor_room_size">Living Space Size</label>
+                  <select id="indoorRoomSize" class="form-control">
+                    <option value="small">Small (&lt;150 sq. ft / Studio bedroom)</option>
+                    <option value="medium" selected>Medium (150 - 350 sq. ft / Standard living room)</option>
+                    <option value="large">Large (&gt;350 sq. ft / Open plan hall)</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label data-i18n="indoor_occupants">Typical Occupant Count</label>
+                  <input type="number" id="indoorOccupants" class="form-control" min="1" max="10" value="2">
+                </div>
+
+                <div class="form-group">
+                  <label data-i18n="indoor_ventilation">Ventilation Setup</label>
+                  <select id="indoorVentilation" class="form-control">
+                    <option value="natural" selected>Natural Windows (Operable exterior windows)</option>
+                    <option value="mechanical">Mechanical Filtered HVAC / Exhaust</option>
+                    <option value="poor">Poor / Sealed (Few windows, limited airflow)</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label data-i18n="indoor_fuel">Cooking Fuel & Method</label>
+                  <select id="indoorCookingFuel" class="form-control">
+                    <option value="lpg" selected>LPG Gas Burners with Exhaust</option>
+                    <option value="electric">Electric / Induction Cooktop (Zero combustion gases)</option>
+                    <option value="piped_gas">Piped Natural Gas (PNG)</option>
+                    <option value="biomass">Biomass / Traditional solid fuel</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label data-i18n="indoor_dust">Observed Dust Level</label>
+                  <select id="indoorDust" class="form-control">
+                    <option value="low">Low (Minimal settling after 48 hrs)</option>
+                    <option value="moderate" selected>Moderate (Visible dust layer on surfaces)</option>
+                    <option value="high">High (Rapid dust buildup near traffic)</option>
+                  </select>
+                </div>
+
+                <div class="form-toggles-grid">
+                  <label class="checkbox-label">
+                    <input type="checkbox" id="indoorPets">
+                    <span data-i18n="indoor_pets">Furry Household Pets</span>
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" id="indoorSmoking">
+                    <span data-i18n="indoor_smoking">Tobacco / Smoke Exposure</span>
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" id="indoorPurifier">
+                    <span data-i18n="indoor_purifier">True HEPA Air Purifier Present</span>
+                  </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">
+                  <i data-lucide="check-circle-2"></i>
+                  <span data-i18n="indoor_btn_audit">Calculate Indoor Air Health Score</span>
+                </button>
+              </form>
+            </div>
+
+            <div class="indoor-results-wrap">
+              <div class="card glass-card indoor-score-card">
+                <div class="card-header-simple">
+                  <span class="card-eyebrow">Diagnostic Result</span>
+                  <span class="badge-priority medium" id="indoorRiskBadge">Audit Pending</span>
+                </div>
+                <div class="score-display">
+                  <div class="score-circle">
+                    <span class="score-num" id="indoorScoreNum">--</span>
+                    <span class="score-den">/ 100</span>
+                  </div>
+                  <div class="score-narrative">
+                    <h4 id="indoorRiskTitle">Residential Air Quality Audit</h4>
+                    <p id="indoorRiskDesc">
+                      Complete the diagnostic form to analyze residential exposure vectors and generate your personalized indoor action plan.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card glass-card">
+                <div class="card-header">
+                  <h3 class="card-title"><i data-lucide="list-checks"></i> Personalized Indoor Action Checklist</h3>
+                </div>
+                <div class="indoor-checklist" id="indoorChecklist">
+                  <p class="text-muted" style="font-size: 0.85rem;">Run the check to reveal prioritized exhaust, ventilation, and particulate control steps.</p>
+                </div>
+              </div>
+
+              <div class="card glass-card plant-reality-card">
+                <div class="card-header">
+                  <h4 class="card-title text-amber" data-i18n="indoor_reality_title"><i data-lucide="alert-triangle"></i> The Houseplant Reality Check</h4>
+                </div>
+                <p data-i18n="indoor_reality_body">
+                  Controlled building science studies demonstrate that potted houseplants do NOT purify indoor PM2.5 particulate matter. Mechanical ventilation and active HEPA filtration (H13/H14) are required.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- VIEW 6: BREATHROUTE — JOURNEY PLANNER          -->
+        <!-- ============================================== -->
+        <section class="view-panel" id="view-breathroute">
+          <div class="commute-header glass-card">
+            <div>
+              <span class="card-eyebrow" data-i18n="route_eyebrow"><i data-lucide="navigation"></i> Feature B: Clean Navigation</span>
+              <h2 class="view-title" data-i18n="route_title">BREATHROUTE — Environmentally Aware Journey Planner</h2>
+              <p class="section-subtext" data-i18n="route_subtitle">
+                Compare travel options by distance, estimated travel time, tailpipe emissions, and air health exposure. Avoid roadside toxic hot spots.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid-2-col">
+            <!-- Journey Input Form -->
+            <div class="card glass-card">
+              <div class="card-header">
+                <h3 class="card-title"><i data-lucide="map-pin"></i> Plan Your Journey</h3>
+              </div>
+
+              <form id="breathRouteForm" class="breath-route-form">
+                <div class="form-group">
+                  <label data-i18n="route_origin_lbl">Starting Point (Origin)</label>
+                  <div class="input-with-action">
+                    <input type="text" id="routeOrigin" class="form-control" data-i18n-placeholder="route_origin_placeholder" placeholder="e.g. Connaught Place, New Delhi or Koramangala">
+                    <button type="button" class="btn btn-outline btn-sm" id="routeUseCurrentOriginBtn" title="Use Current Location">
+                      <i data-lucide="crosshair"></i> <span data-i18n="route_btn_use_current">Current</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label data-i18n="route_dest_lbl">Destination</label>
+                  <input type="text" id="routeDestination" class="form-control" data-i18n-placeholder="route_dest_placeholder" placeholder="e.g. IIT Delhi or Whitefield">
+                </div>
+
+                <div class="grid-2-col">
+                  <div class="form-group">
+                    <label data-i18n="route_departure_lbl">Departure Window</label>
+                    <select id="routeDepartureTime" class="form-control">
+                      <option value="Now">Depart Now</option>
+                      <option value="Morning Rush (08:30)">Morning Rush (08:30)</option>
+                      <option value="Midday Dispersion (13:00)">Midday Dispersion (13:00)</option>
+                      <option value="Evening Rush (18:30)">Evening Rush (18:30)</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label data-i18n="route_manual_lbl">Manual Distance (if needed)</label>
+                    <input type="number" id="routeManualDistance" class="form-control" step="0.5" value="12.0" min="1" max="100">
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">
+                  <i data-lucide="compass"></i>
+                  <span data-i18n="route_btn_calculate">Calculate Clean Travel Plan</span>
+                </button>
+              </form>
+            </div>
+
+            <!-- Route Result & Recommendation Card -->
+            <div class="card glass-card route-result-card" id="routeResultCard">
+              <div class="card-header">
+                <span class="card-eyebrow" data-i18n="route_optimal_eyebrow"><i data-lucide="sparkles"></i> Optimal Clean Mode</span>
+                <span class="badge-priority high" id="routeOptimalBadge">Awaiting Plan</span>
+              </div>
+              <h3 class="route-rec-title" id="routeRecTitle">Enter your travel nodes to generate route intelligence</h3>
+              <p class="route-rec-reason" id="routeRecReason">
+                BreathRoute evaluates direct tailpipe emissions using UK DEFRA 2023 factors and estimates personal inhalation exposure across open roads vs sealed rapid transit.
+              </p>
+
+              <div class="route-key-stats" id="routeKeyStats" style="display: none;">
+                <div class="stat-box">
+                  <span class="stat-label">Journey Distance</span>
+                  <strong class="stat-val" id="routeStatDist">-- km</strong>
+                </div>
+                <div class="stat-box">
+                  <span class="stat-label">Est. Travel Time</span>
+                  <strong class="stat-val" id="routeStatTime">-- mins</strong>
+                </div>
+                <div class="stat-box">
+                  <span class="stat-label">Avoided CO₂e vs Car</span>
+                  <strong class="stat-val text-emerald" id="routeStatSavings">-- kg</strong>
+                </div>
+              </div>
+
+              <div class="route-actions-row" id="routeActionsRow" style="display: none;">
+                <button class="btn btn-primary btn-block" id="routeCommitTripBtn">
+                  <i data-lucide="receipt"></i>
+                  <span data-i18n="route_btn_commit">Log This Clean Journey & Get Personal Impact Receipt</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Multi-Modal Modal Comparison Table -->
+          <div class="card glass-card mt-4" id="routeComparisonTableCard" style="display: none;">
+            <div class="card-header">
+              <h3 class="card-title"><i data-lucide="bar-chart-2"></i> All Transportation Modes Compared for this Journey</h3>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Mode</th>
+                    <th>Travel Time</th>
+                    <th>Tailpipe CO₂e</th>
+                    <th>Air Quality Exposure & Health Precaution</th>
+                  </tr>
+                </thead>
+                <tbody id="routeModesTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- VIEW 7: LIFE-SWITCH — WHAT-IF ENGINE           -->
+        <!-- ============================================== -->
+        <section class="view-panel" id="view-lifeswitch">
+          <div class="commute-header glass-card">
+            <div>
+              <span class="card-eyebrow" data-i18n="switch_eyebrow"><i data-lucide="repeat"></i> Feature C: What-If Simulator</span>
+              <h2 class="view-title" data-i18n="switch_title">LIFE-SWITCH — Environmental Decision Simulator</h2>
+              <p class="section-subtext" data-i18n="switch_subtitle">
+                Simulate lifestyle transitions across commuting, waste, home energy, and cooking. View instant avoided emissions with transparent formulas and receive your Personal Impact Receipt.
+              </p>
+            </div>
+          </div>
+
+          <!-- Switch Selection Tabs -->
+          <div class="switch-tabs-grid" id="lifeSwitchTabs"></div>
+
+          <!-- Active Switch Simulation Playground -->
+          <div class="card glass-card mt-4 switch-playground-card" id="switchPlayground">
+            <div class="card-header">
+              <div>
+                <span class="card-eyebrow" id="simCategory">Mobility</span>
+                <h3 class="card-title" id="simTitle">Solo Motorcycle to Electric Metro</h3>
+              </div>
+            </div>
+
+            <div class="grid-2-col switch-inner-grid">
+              <div class="switch-controls-col">
+                <div class="comparison-contrast-box">
+                  <div class="contrast-item current">
+                    <span class="contrast-tag" data-i18n="switch_current_tag">Current Habit</span>
+                    <strong id="simCurrentHabit">Solo motorcycle commute (103.2 g CO₂e/km)</strong>
+                  </div>
+                  <div class="contrast-arrow">&rarr;</div>
+                  <div class="contrast-item alternative">
+                    <span class="contrast-tag" data-i18n="switch_proposed_tag">Proposed Switch</span>
+                    <strong id="simAlternativeHabit">Electric rapid rail / Metro (28.5 g CO₂e/pkm)</strong>
+                  </div>
+                </div>
+
+                <div class="form-group mt-4">
+                  <div class="slider-label-row">
+                    <label id="simParamLabel">Daily Roundtrip Distance (km):</label>
+                    <span class="slider-val" id="simParamValDisplay">20.0 km</span>
+                  </div>
+                  <input type="range" id="simParamSlider" class="range-slider" min="1" max="80" step="1" value="20">
+                </div>
+              </div>
+
+              <!-- Savings & Projections -->
+              <div class="switch-results-col">
+                <div class="sim-metrics-grid">
+                  <div class="sim-metric-card">
+                    <div class="sim-val text-emerald" id="simMetricMonthly">-- kg</div>
+                    <div class="sim-label" data-i18n="switch_monthly_lbl">Monthly CO₂e Avoided</div>
+                  </div>
+                  <div class="sim-metric-card">
+                    <div class="sim-val text-emerald" id="simMetricAnnual">-- kg</div>
+                    <div class="sim-label" data-i18n="switch_annual_lbl">Annual CO₂e Avoided</div>
+                  </div>
+                </div>
+
+                <div class="sim-methodology-box">
+                  <strong data-i18n="switch_methodology_title">Calculation Methodology:</strong>
+                  <p id="simMethodology">Loading conversion factors...</p>
+                  <strong style="margin-top: 6px; display: block;" data-i18n="switch_assumptions_title">Assumptions & Limitations:</strong>
+                  <p id="simAssumptions">Loading assumptions...</p>
+                </div>
+
+                <button class="btn btn-primary btn-block mt-4" id="simCommitBtn">
+                  <i data-lucide="receipt"></i>
+                  <span data-i18n="switch_btn_commit">Commit to this Switch & Generate Official Impact Receipt</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- VIEW 8: IMPACT TRACKER & RECEIPTS              -->
+        <!-- ============================================== -->
+        <section class="view-panel" id="view-impact">
+          <div class="impact-header glass-card">
+            <div>
+              <span class="card-eyebrow" data-i18n="impact_eyebrow"><i data-lucide="receipt"></i> Feature 6: Verified Ledger</span>
+              <h2 class="view-title" data-i18n="impact_title">Your Environmental Impact & Personal Receipts</h2>
+              <p class="section-subtext" data-i18n="impact_subtitle">Transparent, multi-dimensional accounting of your avoided carbon, clean energy saved, and official impact receipts.</p>
+            </div>
+          </div>
+
+          <div class="impact-metrics-row">
+            <div class="impact-metric-card glass-card">
+              <div class="metric-icon bg-emerald-dim"><i data-lucide="leaf"></i></div>
+              <div class="metric-body">
+                <div class="metric-value" id="impactCo2Total">0.0 <span class="unit">kg</span></div>
+                <div class="metric-name" data-i18n="impact_metric_co2">Estimated CO₂ Avoided</div>
+                <div class="metric-sub">Direct tailpipe & energy savings</div>
+              </div>
+            </div>
+
+            <div class="impact-metric-card glass-card">
+              <div class="metric-icon bg-mint-dim"><i data-lucide="car"></i></div>
+              <div class="metric-body">
+                <div class="metric-value" id="impactCarKmEquiv">0.0 <span class="unit">km</span></div>
+                <div class="metric-name" data-i18n="impact_metric_car">Equivalent Car Driving Avoided</div>
+                <div class="metric-sub">Based on 0.1705 kg CO₂/km factor</div>
+              </div>
+            </div>
+
+            <div class="impact-metric-card glass-card">
+              <div class="metric-icon bg-amber-dim"><i data-lucide="zap"></i></div>
+              <div class="metric-body">
+                <div class="metric-value" id="impactEnergySaved">0.0 <span class="unit">kWh</span></div>
+                <div class="metric-name" data-i18n="impact_metric_energy">Clean Energy Conserved</div>
+                <div class="metric-sub">Thermostat setpoints & smart power</div>
+              </div>
+            </div>
+
+            <div class="impact-metric-card glass-card">
+              <div class="metric-icon bg-teal-dim"><i data-lucide="receipt"></i></div>
+              <div class="metric-body">
+                <div class="metric-value" id="impactReceiptsCount">0</div>
+                <div class="metric-name" data-i18n="impact_metric_receipts">Personal Receipts Issued</div>
+                <div class="metric-sub">Verified decision records</div>
+              </div>
+            </div>
+
+            <div class="impact-metric-card glass-card">
+              <div class="metric-icon bg-coral-dim"><i data-lucide="sparkles"></i></div>
+              <div class="metric-body">
+                <div class="metric-value" id="impactGreenPoints">0 <span class="unit">pts</span></div>
+                <div class="metric-name" data-i18n="impact_metric_points">Green Action Points</div>
+                <div class="metric-sub">Honest community points</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Personal Receipts Ledger -->
+          <div class="card glass-card mt-4">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title" data-i18n="impact_ledger_title"><i data-lucide="file-text"></i> Your Personal Environmental Impact Receipts</h3>
+                <p class="card-subtitle" data-i18n="impact_ledger_subtitle">Official records generated from your commute logs and Life-Switch commitments</p>
+              </div>
+            </div>
+            <div class="receipts-ledger-list" id="receiptsLedgerList">
+              <p class="text-muted" style="font-size: 0.88rem;">No receipts generated yet. Use BreathRoute or Life-Switch to log your first verified decision!</p>
+            </div>
+          </div>
+
+          <!-- Sustainable Alternatives Catalog -->
+          <div class="section-title-wrap text-left mt-5">
+            <span class="sub-heading">Module G: Behavior Shift Directory</span>
+            <h3 class="section-heading-sm">Smart Sustainable Alternatives</h3>
+            <p class="section-subtext">Location-aware, affordable habit switches with documented difficulty ratings:</p>
+          </div>
+          <div class="alternatives-grid" id="alternativesCatalogGrid"></div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- VIEW 9: NEIGHBORHOOD PULSE (COMMUNITY)         -->
+        <!-- ============================================== -->
+        <section class="view-panel" id="view-community">
+          <div class="community-header glass-card">
+            <div>
+              <span class="card-eyebrow" data-i18n="pulse_eyebrow"><i data-lucide="activity"></i> Feature D: Real Collective Ledger</span>
+              <h2 class="view-title" data-i18n="pulse_title">NEIGHBORHOOD PULSE — Community Environmental Intelligence</h2>
+              <p class="section-subtext" data-i18n="pulse_subtitle">
+                Real community participation without fabricated participant counters. Aggregates genuine citizen action records.
+              </p>
+            </div>
+          </div>
+
+          <!-- Real Aggregated Community Ledger Ribbon -->
+          <div class="pulse-stats-ribbon glass-card">
+            <div class="pulse-stat-item">
+              <span class="pulse-num text-emerald" id="pulseTotalActions">0</span>
+              <span class="pulse-label" data-i18n="pulse_stat_actions">Verified Citizen Actions</span>
+            </div>
+            <div class="pulse-stat-item">
+              <span class="pulse-num text-mint" id="pulseTotalCo2">0.0 kg</span>
+              <span class="pulse-label" data-i18n="pulse_stat_co2">Real CO₂e Avoided</span>
+            </div>
+            <div class="pulse-stat-item">
+              <span class="pulse-num text-amber" id="pulseActiveCitizens">0</span>
+              <span class="pulse-label" data-i18n="pulse_stat_citizens">Participating Citizens</span>
+            </div>
+            <div class="pulse-stat-item">
+              <span class="pulse-num text-coral" id="pulseCompletedChallenges">0</span>
+              <span class="pulse-label" data-i18n="pulse_stat_challenges">Challenges Completed</span>
+            </div>
+          </div>
+
+          <!-- Active Challenges Grid -->
+          <div class="section-title-wrap text-left mt-4">
+            <h3 class="section-heading-sm">Active Community Sustainability Challenges</h3>
+          </div>
+          <div class="challenges-grid" id="communityChallengesGrid"></div>
+
+          <!-- Sustainability Badges -->
+          <div class="card glass-card mt-4">
+            <div class="card-header">
+              <h3 class="card-title"><i data-lucide="shield-check"></i> Earned Sustainability Badges</h3>
+            </div>
+            <div class="badges-row" id="badgesShowcaseRow">
+              <div class="badge-item" id="badge-Metro-Master">
+                <div class="badge-icon"><i data-lucide="train-track"></i></div>
+                <span class="badge-name">Metro Master</span>
+                <span class="badge-status">In Progress</span>
+              </div>
+              <div class="badge-item" id="badge-Zero-Idle-Hero">
+                <div class="badge-icon"><i data-lucide="shield-check"></i></div>
+                <span class="badge-name">Zero Idle Hero</span>
+                <span class="badge-status">In Progress</span>
+              </div>
+              <div class="badge-item" id="badge-Air-Alchemist">
+                <div class="badge-icon"><i data-lucide="wind"></i></div>
+                <span class="badge-name">Air Alchemist</span>
+                <span class="badge-status">In Progress</span>
+              </div>
+              <div class="badge-item" id="badge-Cycle-Vanguard">
+                <div class="badge-icon"><i data-lucide="leaf"></i></div>
+                <span class="badge-name">Cycle Vanguard</span>
+                <span class="badge-status">In Progress</span>
+              </div>
+              <div class="badge-item" id="badge-Volt-Guardian">
+                <div class="badge-icon"><i data-lucide="zap"></i></div>
+                <span class="badge-name">Volt Guardian</span>
+                <span class="badge-status">In Progress</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- VIEW 10: AIR-TWIN PROFILE & OPTIONAL ACCOUNT   -->
+        <!-- ============================================== -->
+        <section class="view-panel" id="view-airtwin">
+          <div class="card glass-card air-twin-profile-card">
+            <div class="card-header">
+              <div>
+                <span class="card-eyebrow"><i data-lucide="user-check"></i> Feature A: Adaptive Twin</span>
+                <h3 class="card-title">AIR-TWIN — Personal Environmental Profile</h3>
+                <p class="card-subtitle">Your profile adapts whenever you change your location or routine, without clinical or medical diagnosis.</p>
+              </div>
+            </div>
+
+            <!-- Air-Twin Live Resilience Gauge -->
+            <div class="air-twin-gauge-box">
+              <div class="twin-score-col">
+                <div class="twin-score-circle">
+                  <span class="twin-score-val" id="twinScoreVal">--</span>
+                  <span class="twin-score-lbl">Resilience Score</span>
+                </div>
+              </div>
+              <div class="twin-insights-col">
+                <div class="twin-insight-item">
+                  <span>Commute Vulnerability:</span>
+                  <strong id="twinTransportVuln">--</strong>
+                </div>
+                <div class="twin-insight-item">
+                  <span>Safest Ventilation Window:</span>
+                  <strong id="twinVentWindow">11:30 AM - 3:00 PM</strong>
+                </div>
+                <div class="twin-insight-item">
+                  <span>Optimal Exercise Window:</span>
+                  <strong id="twinExerciseWindow">12:00 PM - 4:00 PM</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Profile Settings Form -->
+            <form id="airTwinSettingsForm" class="settings-form mt-4">
+              <div class="grid-2-col">
+                <div class="form-group">
+                  <label>Display Name (or Nickname)</label>
+                  <input type="text" id="prefDisplayName" class="form-control" value="Urban Citizen">
+                </div>
+                <div class="form-group">
+                  <label>Selected Location / City</label>
+                  <input type="text" id="prefCity" class="form-control" placeholder="City or Postal Code">
+                </div>
+              </div>
+
+              <div class="grid-2-col">
+                <div class="form-group">
+                  <label>Daily Commute Distance (One-Way km)</label>
+                  <input type="number" id="prefCommuteDist" class="form-control" step="0.5" value="10.0">
+                </div>
+                <div class="form-group">
+                  <label>Primary Commute Mode</label>
+                  <select id="prefTransport" class="form-control">
+                    <option value="public_transit">Public Transit / Metro</option>
+                    <option value="motorcycle">Motorcycle / Scooter</option>
+                    <option value="petrol_car">Private Petrol Car</option>
+                    <option value="carpool">Carpooling</option>
+                    <option value="cycling">Bicycle</option>
+                    <option value="walking">Walking</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="grid-2-col">
+                <div class="form-group">
+                  <label>Typical Outdoor Hours</label>
+                  <input type="text" id="prefOutdoorHours" class="form-control" value="1-2 hours">
+                </div>
+                <div class="form-group">
+                  <label>Home Ventilation Type</label>
+                  <select id="prefVentilation" class="form-control">
+                    <option value="natural">Natural Windows</option>
+                    <option value="mechanical">Mechanical Filtered HVAC</option>
+                    <option value="poor">Poor / Sealed</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="grid-2-col">
+                <div class="form-group">
+                  <label>Cooking Fuel</label>
+                  <select id="prefCookingFuel" class="form-control">
+                    <option value="lpg">LPG Gas Burners</option>
+                    <option value="electric">Electric / Induction Cooktop</option>
+                    <option value="piped_gas">Piped Natural Gas (PNG)</option>
+                    <option value="biomass">Biomass / Traditional</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Preferred Bhasha-Air AI Language</label>
+                  <select id="prefLanguage" class="form-control">
+                    <option value="en">English</option>
+                    <option value="hi">हिंदी (Hindi)</option>
+                    <option value="bn">বাংলা (Bengali)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-actions mt-4">
+                <button type="submit" class="btn btn-primary">
+                  <i data-lucide="save"></i>
+                  <span>Update Air-Twin Profile</span>
+                </button>
+              </div>
+            </form>
+
+            <!-- Optional Cloud Sync & Account Box -->
+            <div class="card glass-card mt-5 optional-account-box">
+              <div class="card-header">
+                <div>
+                  <h4 class="card-title"><i data-lucide="cloud"></i> Optional Cloud Sync</h4>
+                  <p class="card-subtitle">Sync your environmental history across devices (Entirely optional — not required for any feature).</p>
+                </div>
+              </div>
+              <form id="optionalRegisterForm" class="grid-3-col" style="align-items: flex-end;">
+                <div class="form-group" style="margin: 0;">
+                  <label>Username</label>
+                  <input type="text" id="optUsername" class="form-control" placeholder="choose username">
+                </div>
+                <div class="form-group" style="margin: 0;">
+                  <label>Email</label>
+                  <input type="email" id="optEmail" class="form-control" placeholder="name@domain.com">
+                </div>
+                <div class="form-group" style="margin: 0;">
+                  <label>Password</label>
+                  <input type="password" id="optPassword" class="form-control" placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn btn-secondary btn-block mt-3" style="grid-column: 1 / -1;">
+                  <i data-lucide="user-plus"></i>
+                  <span>Create Optional Sync Account</span>
+                </button>
+              </form>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- VIEW 11: POLLUTION EXPLAINED                   -->
+        <!-- ============================================== -->
+        <section class="view-panel" id="view-pollution-guide">
+          <div class="guide-header glass-card">
+            <span class="card-eyebrow"><i data-lucide="book-open"></i> Educational Intelligence</span>
+            <h2 class="view-title">Pollution Explained: Science of the Urban Atmosphere</h2>
+            <p class="section-subtext">Master the physics, chemistry, and meteorology governing the air you breathe every second.</p>
+          </div>
+
+          <div class="guide-grid">
+            <div class="guide-card glass-card">
+              <div class="guide-icon"><i data-lucide="microscope"></i></div>
+              <h3>PM2.5: The Microscopic Intruder</h3>
+              <p>Particulate Matter &le; 2.5 microns (1/30th the width of a human hair). It bypasses nasal hairs, settling deep inside lung alveoli and passing directly into the bloodstream.</p>
+              <div class="guide-takeaway">Defense: Cloth masks offer zero electrostatic hold; only certified N95 / FFP2 respirators filter PM2.5.</div>
+            </div>
+
+            <div class="guide-card glass-card">
+              <div class="guide-icon"><i data-lucide="wind"></i></div>
+              <h3>PM10: Coarse Inhalable Dust</h3>
+              <p>Particles between 2.5 and 10 microns, consisting of road resuspension, construction debris, pollen, and tyre wear. Trapped primarily in the upper respiratory tract.</p>
+              <div class="guide-takeaway">Defense: Wet mopping and damp microfiber dusting prevent domestic re-suspension.</div>
+            </div>
+
+            <div class="guide-card glass-card">
+              <div class="guide-icon"><i data-lucide="flame"></i></div>
+              <h3>NO2: The Combustion Marker</h3>
+              <p>Nitrogen Dioxide is emitted at high temperatures by internal combustion engines. It irritates airways and is the primary precursor to ground-level ozone.</p>
+              <div class="guide-takeaway">Defense: Electrified urban rail transit generates zero roadside tailpipe NO₂.</div>
+            </div>
+
+            <div class="guide-card glass-card">
+              <div class="guide-icon"><i data-lucide="sun"></i></div>
+              <h3>Ground-Level Ozone (O3)</h3>
+              <p>Formed on hot sunny days through photochemical reactions between NOx and VOCs. Causes acute chest tightness during outdoor workouts.</p>
+              <div class="guide-takeaway">Defense: Schedule outdoor workouts in early morning or after sunset on high-ozone summer days.</div>
+            </div>
+
+            <div class="guide-card glass-card">
+              <div class="guide-icon"><i data-lucide="layers"></i></div>
+              <h3>Thermal Inversion & Boundary Layers</h3>
+              <p>During winter nights, the ground cools rapidly, trapping vehicle emissions under cold air like a sealed lid until midday sun elevates the boundary layer.</p>
+              <div class="guide-takeaway">Defense: Ventilate indoor spaces between 11:30 AM and 3:00 PM when the inversion lid lifts.</div>
+            </div>
+
+            <div class="guide-card glass-card">
+              <div class="guide-icon"><i data-lucide="scale"></i></div>
+              <h3>US EPA AQI vs EAQI Standards</h3>
+              <p>Air Quality Indices convert multi-pollutant concentrations into a single number based on piecewise breakpoints. PRANVYRA uses the US EPA AQI standard (40 CFR Part 58).</p>
+              <div class="guide-takeaway">Defense: Always monitor the dominant sub-index rather than an unweighted chemical average.</div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+      
+      <!-- Footer -->
+      <footer class="app-footer">
+        <div class="footer-left">
+          <span>PRANVYRA &bull; Open-Access AI Urban Air Intelligence & Sustainable Lifestyle Platform</span>
+        </div>
+        <div class="footer-right">
+          <span>Every Breath. A Better Tomorrow.</span>
+        </div>
+      </footer>
+
+    </div>
+  </div>
+
+  <!-- Personal Impact Receipt Modal -->
+  <div class="receipt-modal-backdrop" id="receiptModalBackdrop" style="display: none;">
+    <div class="receipt-modal-card glass-card" id="printableReceipt">
+      <div class="receipt-brand-head">
+        <img src="/static/assets/logo.svg" alt="PRANVYRA">
+        <div>
+          <h4>PRANVYRA ENVIRONMENTAL IMPACT RECEIPT</h4>
+          <span class="rcpt-id" id="modalReceiptId">PRAN-RCPT-XXXXXXXX</span>
+        </div>
+      </div>
+      
+      <div class="receipt-body">
+        <div class="rcpt-line">
+          <span class="lbl">ISSUED AT:</span>
+          <span class="val" id="modalReceiptDate">2026-11-18 UTC</span>
+        </div>
+        <div class="rcpt-line">
+          <span class="lbl">DECISION TAKEN:</span>
+          <span class="val highlight" id="modalReceiptDecision">--</span>
+        </div>
+        <div class="rcpt-divider"></div>
+        <div class="rcpt-comparison">
+          <div class="comp-col">
+            <span class="comp-lbl">BEFORE (BASELINE):</span>
+            <span class="comp-val" id="modalReceiptBefore">--</span>
+          </div>
+          <div class="comp-col">
+            <span class="comp-lbl">AFTER (ADOPTED):</span>
+            <span class="comp-val" id="modalReceiptAfter">--</span>
+          </div>
+        </div>
+        <div class="rcpt-divider"></div>
+        <div class="rcpt-savings-box">
+          <span class="sav-lbl">VERIFIED POTENTIAL SAVINGS:</span>
+          <strong class="sav-val" id="modalReceiptSavings">-- kg CO₂e Avoided</strong>
+        </div>
+        
+        <div class="rcpt-section">
+          <span class="lbl">WHY IT MATTERS:</span>
+          <p id="modalReceiptWhy">--</p>
+        </div>
+        
+        <div class="rcpt-section">
+          <span class="lbl">CALCULATION METHODOLOGY:</span>
+          <p id="modalReceiptMethodology">UK DEFRA 2023 & US EPA Conversion Factors.</p>
+        </div>
+        
+        <div class="rcpt-disclaimer" id="modalReceiptDisclaimer">
+          Estimated Avoided Emissions (Not a direct measurement of citywide air quality).
+        </div>
+      </div>
+
+      <div class="receipt-modal-actions no-print">
+        <button class="btn btn-primary btn-sm" id="printReceiptBtn">
+          <i data-lucide="printer"></i>
+          <span>Print / Save as PDF</span>
+        </button>
+        <button class="btn btn-outline btn-sm" id="closeReceiptModalBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- JavaScript Modules -->
+  <script src="/static/js/state.js"></script>
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/i18n/language.js"></script>
+  <script src="/static/js/charts.js"></script>
+  <script src="/static/js/map.js"></script>
+  <script src="/static/js/dashboard.js"></script>
+  <script src="/static/js/assistant.js"></script>
+  <script src="/static/js/planner.js"></script>
+  <script src="/static/js/indoor.js"></script>
+  <script src="/static/js/breathroute.js"></script>
+  <script src="/static/js/lifeswitch.js"></script>
+  <script src="/static/js/impact.js"></script>
+  <script src="/static/js/community.js"></script>
+  <script src="/static/js/airtwin.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

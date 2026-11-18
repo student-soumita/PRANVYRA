@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRANVYRA — Authentication | Every Breath. A Better Tomorrow.</title>
+  <meta name="description" content="Sign in or register for PRANVYRA — AI-Powered Urban Air Intelligence & Sustainable Lifestyle Assistant.">
+  <link rel="icon" type="image/svg+xml" href="/static/assets/logo.svg">
+  
+  <!-- Google Fonts: Inter / Plus Jakarta Sans, Noto Sans Devanagari, Noto Sans Bengali -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Core & Component CSS -->
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/modules.css">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="theme-dark auth-page">
+
+  <!-- Subtle Cosmic Starfield & Nebula Mesh -->
+  <div class="cosmic-starfield"></div>
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+
+  <div class="auth-wrapper">
+    
+    <!-- Topbar Bar with Language Switcher -->
+    <header class="auth-topbar">
+      <div class="auth-brand-pill">
+        <img src="/static/assets/logo.svg" alt="PRANVYRA Logo" class="brand-logo-small">
+        <span class="auth-brand-name" data-i18n="brand_name">PRANVYRA</span>
+      </div>
+
+      <!-- Trilingual Language Switcher (EN | HI | BN) -->
+      <div class="bhasha-switcher auth-lang-switcher" id="authLangSwitcher">
+        <span class="bhasha-label"><i data-lucide="languages"></i></span>
+        <button class="bhasha-btn active" data-lang="en">EN</button>
+        <button class="bhasha-btn" data-lang="hi">हिंदी</button>
+        <button class="bhasha-btn" data-lang="bn">বাংলা</button>
+      </div>
+    </header>
+
+    <!-- Main Cosmic Auth Card Container -->
+    <main class="auth-main-container">
+      <div class="auth-card glass-card">
+        
+        <!-- Brand Header Header -->
+        <div class="auth-card-header">
+          <img src="/static/assets/logo.svg" alt="PRANVYRA" class="auth-hero-logo">
+          <h1 class="auth-title" data-i18n="brand_name">PRANVYRA</h1>
+          <p class="auth-motto" data-i18n="brand_motto">Every Breath. A Better Tomorrow.</p>
+          <div class="auth-tagline-badge">
+            <i data-lucide="shield-check"></i>
+            <span data-i18n="auth_security_badge">Secure Atmospheric Environmental Intelligence</span>
+          </div>
+        </div>
+
+        <!-- Auth Tabs (Login / Register) -->
+        <div class="auth-tabs" role="tablist">
+          <button class="auth-tab-btn active" id="tabLoginBtn" role="tab" aria-selected="true" data-i18n="auth_tab_login">Sign In</button>
+          <button class="auth-tab-btn" id="tabRegisterBtn" role="tab" aria-selected="false" data-i18n="auth_tab_register">Create Account</button>
+        </div>
+
+        <!-- Global Alert / Error Box -->
+        <div class="auth-alert" id="authAlert" style="display: none;" role="alert">
+          <i data-lucide="alert-circle" id="authAlertIcon"></i>
+          <span id="authAlertText"></span>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- 1. LOGIN FORM                                  -->
+        <!-- ============================================== -->
+        <form class="auth-form" id="loginForm">
+          <div class="form-group">
+            <label for="loginIdentifier">
+              <i data-lucide="mail"></i>
+              <span data-i18n="auth_email_or_username">Email or Username</span>
+            </label>
+            <input 
+              type="text" 
+              id="loginIdentifier" 
+              name="identifier" 
+              class="form-control" 
+              data-i18n-placeholder="auth_placeholder_email_user" 
+              placeholder="e.g. citizen@pranvyra.org or citizen_delhi" 
+              required 
+              autocomplete="username">
+          </div>
+
+          <div class="form-group">
+            <label for="loginPassword">
+              <i data-lucide="lock"></i>
+              <span data-i18n="auth_password">Password</span>
+            </label>
+            <div class="password-input-wrap">
+              <input 
+                type="password" 
+                id="loginPassword" 
+                name="password" 
+                class="form-control" 
+                data-i18n-placeholder="auth_placeholder_password" 
+                placeholder="Enter your password" 
+                required 
+                autocomplete="current-password">
+              <button type="button" class="btn-toggle-pw" aria-label="Toggle password visibility" data-target="loginPassword">
+                <i data-lucide="eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="auth-options-row">
+            <label class="remember-label">
+              <input type="checkbox" id="loginRememberMe" name="remember_me" checked>
+              <span data-i18n="auth_remember_me">Remember Me</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block auth-submit-btn" id="loginSubmitBtn">
+            <i data-lucide="log-in"></i>
+            <span data-i18n="auth_btn_login">Sign In</span>
+          </button>
+
+          <div class="auth-switch-prompt">
+            <span data-i18n="auth_dont_have_account">Don't have an account?</span>
+            <button type="button" class="btn-link" id="switchToRegisterBtn" data-i18n="auth_switch_to_register">Create an account</button>
+          </div>
+        </form>
+
+        <!-- ============================================== -->
+        <!-- 2. REGISTRATION FORM                           -->
+        <!-- ============================================== -->
+        <form class="auth-form" id="registerForm" style="display: none;">
+          <div class="form-group">
+            <label for="regFullName">
+              <i data-lucide="user"></i>
+              <span data-i18n="auth_full_name">Full Name</span>
+            </label>
+            <input 
+              type="text" 
+              id="regFullName" 
+              name="full_name" 
+              class="form-control" 
+              data-i18n-placeholder="auth_placeholder_name" 
+              placeholder="e.g. Ananya Sen / Rahul Sharma" 
+              required 
+              autocomplete="name">
+          </div>
+
+          <div class="form-group">
+            <label for="regEmail">
+              <i data-lucide="mail"></i>
+              <span data-i18n="auth_email">Email Address</span>
+            </label>
+            <input 
+              type="email" 
+              id="regEmail" 
+              name="email" 
+              class="form-control" 
+              data-i18n-placeholder="auth_placeholder_email" 
+              placeholder="e.g. ananya@domain.org" 
+              required 
+              autocomplete="email">
+          </div>
+
+          <div class="form-group">
+            <label for="regPassword">
+              <i data-lucide="lock"></i>
+              <span data-i18n="auth_password">Password (Minimum 6 characters)</span>
+            </label>
+            <div class="password-input-wrap">
+              <input 
+                type="password" 
+                id="regPassword" 
+                name="password" 
+                class="form-control" 
+                data-i18n-placeholder="auth_placeholder_password_req" 
+                placeholder="Choose a strong password" 
+                minlength="6" 
+                required 
+                autocomplete="new-password">
+              <button type="button" class="btn-toggle-pw" aria-label="Toggle password visibility" data-target="regPassword">
+                <i data-lucide="eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="regConfirmPassword">
+              <i data-lucide="check-check"></i>
+              <span data-i18n="auth_confirm_password">Confirm Password</span>
+            </label>
+            <div class="password-input-wrap">
+              <input 
+                type="password" 
+                id="regConfirmPassword" 
+                name="confirm_password" 
+                class="form-control" 
+                data-i18n-placeholder="auth_placeholder_confirm" 
+                placeholder="Re-type your password" 
+                minlength="6" 
+                required 
+                autocomplete="new-password">
+              <button type="button" class="btn-toggle-pw" aria-label="Toggle password visibility" data-target="regConfirmPassword">
+                <i data-lucide="eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block auth-submit-btn" id="registerSubmitBtn">
+            <i data-lucide="user-plus"></i>
+            <span data-i18n="auth_btn_register">Create Account</span>
+          </button>
+
+          <div class="auth-switch-prompt">
+            <span data-i18n="auth_already_have_account">Already have an account?</span>
+            <button type="button" class="btn-link" id="switchToLoginBtn" data-i18n="auth_switch_to_login">Sign in here</button>
+          </div>
+        </form>
+
+        <div class="auth-card-footer">
+          <span class="auth-footer-privacy" data-i18n="auth_data_isolation_notice">
+            <i data-lucide="lock"></i> Private & Isolated Telemetry. Passwords securely hashed with PBKDF2-SHA256.
+          </span>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="auth-page-footer">
+      <span>&copy; 2026 PRANVYRA. <span data-i18n="brand_motto">Every Breath. A Better Tomorrow.</span></span>
+      <span data-i18n="open_access_notice">Open-Access AI Urban Air Intelligence & Sustainable Lifestyle Platform</span>
+    </footer>
+
+  </div>
+
+  <!-- Centralized i18n Engine -->
+  <script src="/static/js/i18n/language.js"></script>
+
+  <!-- Dedicated Authentication Controller Script -->
+  <script>
+    (function() {
+      const tabLoginBtn = document.getElementById('tabLoginBtn');
+      const tabRegisterBtn = document.getElementById('tabRegisterBtn');
+      const loginForm = document.getElementById('loginForm');
+      const registerForm = document.getElementById('registerForm');
+      const switchToRegisterBtn = document.getElementById('switchToRegisterBtn');
+      const switchToLoginBtn = document.getElementById('switchToLoginBtn');
+      const authAlert = document.getElementById('authAlert');
+      const authAlertText = document.getElementById('authAlertText');
+
+      // Check URL hash for initial tab state (e.g. #register)
+      function checkHashTab() {
+        if (window.location.hash === '#register') {
+          showTab('register');
+        } else {
+          showTab('login');
+        }
+      }
+
+      function showTab(tabName) {
+        hideAlert();
+        if (tabName === 'register') {
+          tabRegisterBtn.classList.add('active');
+          tabRegisterBtn.setAttribute('aria-selected', 'true');
+          tabLoginBtn.classList.remove('active');
+          tabLoginBtn.setAttribute('aria-selected', 'false');
+          registerForm.style.display = 'block';
+          loginForm.style.display = 'none';
+          window.location.hash = 'register';
+        } else {
+          tabLoginBtn.classList.add('active');
+          tabLoginBtn.setAttribute('aria-selected', 'true');
+          tabRegisterBtn.classList.remove('active');
+          tabRegisterBtn.setAttribute('aria-selected', 'false');
+          loginForm.style.display = 'block';
+          registerForm.style.display = 'none';
+          window.location.hash = 'login';
+        }
+        if (window.lucide) window.lucide.createIcons();
+      }
+
+      tabLoginBtn.addEventListener('click', () => showTab('login'));
+      tabRegisterBtn.addEventListener('click', () => showTab('register'));
+      switchToRegisterBtn.addEventListener('click', () => showTab('register'));
+      switchToLoginBtn.addEventListener('click', () => showTab('login'));
+
+      // Show/Hide password toggle buttons
+      document.querySelectorAll('.btn-toggle-pw').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetId = btn.getAttribute('data-target');
+          const input = document.getElementById(targetId);
+          if (input) {
+            const isPassword = input.type === 'password';
+            input.type = isPassword ? 'text' : 'password';
+            btn.innerHTML = `<i data-lucide="${isPassword ? 'eye-off' : 'eye'}"></i>`;
+            if (window.lucide) window.lucide.createIcons();
+          }
+        });
+      });
+
+      function showAlert(msg, isSuccess = false) {
+        authAlertText.textContent = msg;
+        authAlert.className = isSuccess ? 'auth-alert alert-success' : 'auth-alert alert-error';
+        authAlert.style.display = 'flex';
+        if (window.lucide) window.lucide.createIcons();
+      }
+
+      function hideAlert() {
+        authAlert.style.display = 'none';
+      }
+
+      // Handle Login Submit
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        hideAlert();
+
+        const identifier = document.getElementById('loginIdentifier').value.trim();
+        const password = document.getElementById('loginPassword').value;
+        const rememberMe = document.getElementById('loginRememberMe').checked;
+        const submitBtn = document.getElementById('loginSubmitBtn');
+
+        if (!identifier || !password) {
+          showAlert(window.PranvyraI18n ? window.PranvyraI18n.t('auth_err_required', 'Please fill in all fields.') : 'Please fill in all fields.');
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<i data-lucide="loader-2" class="spin"></i> <span>Signing in...</span>`;
+        if (window.lucide) window.lucide.createIcons();
+
+        try {
+          const res = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email_or_username: identifier,
+              password: password,
+              remember_me: rememberMe
+            })
+          });
+
+          const data = await res.json();
+          if (res.ok && data.success) {
+            showAlert(data.message || 'Login successful! Redirecting...', true);
+            // Apply user's saved language preference if returned
+            if (data.user && data.user.language_pref && window.PranvyraI18n) {
+              window.PranvyraI18n.setLanguage(data.user.language_pref);
+            }
+            // Parse next URL parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const nextUrl = urlParams.get('next') || '/';
+            setTimeout(() => {
+              window.location.href = nextUrl;
+            }, 600);
+          } else {
+            showAlert(data.error || 'Invalid credentials.');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `<i data-lucide="log-in"></i> <span data-i18n="auth_btn_login">Sign In</span>`;
+            if (window.lucide) window.lucide.createIcons();
+          }
+        } catch (err) {
+          showAlert('Network error connecting to authentication server.');
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = `<i data-lucide="log-in"></i> <span data-i18n="auth_btn_login">Sign In</span>`;
+          if (window.lucide) window.lucide.createIcons();
+        }
+      });
+
+      // Handle Register Submit
+      registerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        hideAlert();
+
+        const fullName = document.getElementById('regFullName').value.trim();
+        const email = document.getElementById('regEmail').value.trim();
+        const password = document.getElementById('regPassword').value;
+        const confirmPassword = document.getElementById('regConfirmPassword').value;
+        const currentLang = window.PranvyraI18n ? window.PranvyraI18n.currentLanguage : 'en';
+        const submitBtn = document.getElementById('registerSubmitBtn');
+
+        if (!fullName || !email || !password || !confirmPassword) {
+          showAlert(window.PranvyraI18n ? window.PranvyraI18n.t('auth_err_required', 'Please fill in all fields.') : 'Please fill in all fields.');
+          return;
+        }
+
+        if (password.length < 6) {
+          showAlert(window.PranvyraI18n ? window.PranvyraI18n.t('auth_err_password_length', 'Password must be at least 6 characters.') : 'Password must be at least 6 characters.');
+          return;
+        }
+
+        if (password !== confirmPassword) {
+          showAlert(window.PranvyraI18n ? window.PranvyraI18n.t('auth_err_password_match', 'Passwords do not match.') : 'Passwords do not match.');
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<i data-lucide="loader-2" class="spin"></i> <span>Creating account...</span>`;
+        if (window.lucide) window.lucide.createIcons();
+
+        try {
+          const res = await fetch('/api/auth/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              full_name: fullName,
+              email: email,
+              password: password,
+              confirm_password: confirmPassword,
+              language_pref: currentLang
+            })
+          });
+
+          const data = await res.json();
+          if (res.ok && data.success) {
+            showAlert(data.message || 'Account created successfully! Redirecting...', true);
+            setTimeout(() => {
+              window.location.href = '/';
+            }, 800);
+          } else {
+            showAlert(data.error || 'Failed to create account.');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `<i data-lucide="user-plus"></i> <span data-i18n="auth_btn_register">Create Account</span>`;
+            if (window.lucide) window.lucide.createIcons();
+          }
+        } catch (err) {
+          showAlert('Network error connecting to registration server.');
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = `<i data-lucide="user-plus"></i> <span data-i18n="auth_btn_register">Create Account</span>`;
+          if (window.lucide) window.lucide.createIcons();
+        }
+      });
+
+      document.addEventListener('DOMContentLoaded', () => {
+        checkHashTab();
+        if (window.lucide) window.lucide.createIcons();
+      });
+      window.addEventListener('hashchange', checkHashTab);
+    })();
+  </script>
+</body>
+</html>
