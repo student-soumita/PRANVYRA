@@ -35,12 +35,15 @@ window.PranvyraApp = {
 
     // Determine if user has a location set; if so, load dashboard
     const profile = window.PranvyraState.profile;
-    if (profile.latitude && profile.longitude) {
+    if (profile && profile.latitude && profile.longitude) {
+      await this.loadDashboardData();
+    } else {
+      // Benchmark fallback: load baseline atmospheric intelligence so dashboard initializes immediately
       await this.loadDashboardData();
     }
 
-    // Check initial route hash
-    const initialHash = window.location.hash.replace('#', '') || 'overview';
+    // Check initial route hash (defaults to 'dashboard' for authenticated experience)
+    const initialHash = window.location.hash.replace('#', '') || 'dashboard';
     this.switchView(initialHash);
 
     if (window.lucide) {
@@ -260,9 +263,22 @@ window.PranvyraApp = {
 
     window.PranvyraState.setView(activeView);
 
-    // Invalidate map size if opening dashboard
-    if (activeView === 'dashboard' && window.PranvyraMap) {
-      window.PranvyraMap.invalidateSize();
+    // Stop voice recognition and speech synthesis if navigating away from assistant
+    if (activeView !== 'assistant' && window.PranvyraAssistant) {
+      if (window.PranvyraAssistant.isRecording) window.PranvyraAssistant.stopVoiceInput();
+      if (window.PranvyraAssistant.isSpeaking) window.PranvyraAssistant.stopSpeech();
+    }
+
+    // Ensure dashboard data and map size are refreshed if opening dashboard
+    if (activeView === 'dashboard') {
+      if (!window.PranvyraState.airQuality) {
+        this.loadDashboardData();
+      }
+      if (window.PranvyraMap) {
+        setTimeout(() => {
+          window.PranvyraMap.invalidateSize();
+        }, 120);
+      }
     }
 
     // Lazy-load module data on first view

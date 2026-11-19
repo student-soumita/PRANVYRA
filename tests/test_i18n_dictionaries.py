@@ -59,6 +59,37 @@ class TestI18nDictionaries(unittest.TestCase):
                 self.assertTrue(isinstance(v, str) and len(v.strip()) > 0, 
                                 f"Empty or non-string translation for '{k}' in {lang}.json")
 
+    def test_voice_companion_keys_defined(self):
+        """Verifies all mandatory voice companion keys exist and are non-empty across EN, HI, BN."""
+        required_voice_keys = [
+            "voice_input",
+            "voice_output",
+            "start_listening",
+            "stop_listening",
+            "listening",
+            "processing_voice",
+            "speaking",
+            "pause_speech",
+            "resume_speech",
+            "stop_speech",
+            "microphone_permission_denied",
+            "microphone_not_found",
+            "speech_recognition_unsupported",
+            "speech_synthesis_unsupported",
+            "language_voice_unavailable",
+            "voice_input_error",
+            "voice_output_error",
+            "recognized_text",
+            "send_message",
+            "voice_privacy_notice"
+        ]
+        for path, lang in [(self.en_path, "en"), (self.hi_path, "hi"), (self.bn_path, "bn")]:
+            with open(path, "r", encoding="utf-8") as f:
+                d = json.load(f)
+            for vk in required_voice_keys:
+                self.assertIn(vk, d, f"Missing voice key '{vk}' in {lang}.json")
+                self.assertGreater(len(d[vk].strip()), 0, f"Voice key '{vk}' in {lang}.json cannot be empty")
+
     def test_expert_roles_keys_defined(self):
         with open(self.en_path, "r", encoding="utf-8") as f:
             en_dict = json.load(f)

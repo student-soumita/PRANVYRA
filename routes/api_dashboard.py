@@ -35,14 +35,16 @@ def get_dashboard_overview():
     current_lat = user.get("latitude")
     current_lon = user.get("longitude")
     
-    # If no coordinates are set, prompt for location onboarding
+    # If no coordinates are set, use calibrated benchmark coordinates (New Delhi)
+    # so the dashboard initializes with live atmospheric intelligence immediately
+    is_benchmark_location = False
     if current_lat is None or current_lon is None:
-        return jsonify({
-            "success": True,
-            "requires_location": True,
-            "profile": user,
-            "message": "Welcome to PRANVYRA! Please enter your city/locality or grant location permission to view live environmental conditions."
-        })
+        from config import Config
+        current_lat = Config.DEFAULT_LAT
+        current_lon = Config.DEFAULT_LON
+        if not user.get("city") or user.get("city") == "Select Your City":
+            user["city"] = Config.DEFAULT_CITY
+        is_benchmark_location = True
         
     # Fetch real live environmental data
     aqi_data = get_live_air_quality(current_lat, current_lon)
@@ -59,6 +61,7 @@ def get_dashboard_overview():
     return jsonify({
         "success": True,
         "requires_location": False,
+        "is_benchmark_location": is_benchmark_location,
         "profile": user,
         "air_quality": aqi_data,
         "weather": weather_data,

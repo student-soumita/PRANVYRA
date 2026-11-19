@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgImpact" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#022c22"/>
+      <stop offset="60%" stop-color="#064e3b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <radialGradient id="leafGlow" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#34d399" stop-opacity="0.55"/>
+      <stop offset="50%" stop-color="#10b981" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#022c22" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#bgImpact)"/>
+  <circle cx="400" cy="230" r="250" fill="url(#leafGlow)"/>
+
+  <!-- Growing Tree / Carbon Forest Canopy Rings -->
+  <circle cx="400" cy="240" r="160" fill="none" stroke="#10b981" stroke-width="1.5" stroke-dasharray="10,8" opacity="0.4"/>
+  <circle cx="400" cy="240" r="110" fill="none" stroke="#34d399" stroke-width="2" opacity="0.6"/>
+
+  <!-- Living Sprout / Leaf Graphic -->
+  <g transform="translate(360, 180) scale(3.5)" fill="none" stroke="#34d399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 3.5 1 9.2a7 7 0 0 1-9 8.8Z" fill="rgba(52, 211, 153, 0.25)"/>
+    <path d="M11 20v-8"/>
+    <path d="M11 15c2-1 4-1 6-2"/>
+  </g>
+
+  <!-- Carbon Metric Counter Rings & Rays -->
+  <path d="M220 380 Q 400 330, 580 380" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="400" cy="355" r="5" fill="#fef08a"/>
+</svg>

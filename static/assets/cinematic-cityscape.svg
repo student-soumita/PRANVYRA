@@ -1,0 +1,185 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%">
+  <defs>
+    <!-- Sky & Atmospheric Gradients -->
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#020617"/>
+      <stop offset="35%" stop-color="#07152f"/>
+      <stop offset="55%" stop-color="#0f2b48"/>
+      <stop offset="70%" stop-color="#1e3a5f"/>
+      <stop offset="85%" stop-color="#3b332b"/>
+      <stop offset="100%" stop-color="#1c1917"/>
+    </linearGradient>
+
+    <!-- Solar Breakout Sun Rays -->
+    <radialGradient id="sunGlow" cx="65%" cy="38%" r="45%">
+      <stop offset="0%" stop-color="#fef08a" stop-opacity="0.85"/>
+      <stop offset="20%" stop-color="#f59e0b" stop-opacity="0.45"/>
+      <stop offset="45%" stop-color="#10b981" stop-opacity="0.25"/>
+      <stop offset="75%" stop-color="#06b6d4" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#020617" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Atmospheric Inversion / Pollution Haze Layer -->
+    <linearGradient id="hazeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0"/>
+      <stop offset="40%" stop-color="#d97706" stop-opacity="0.25"/>
+      <stop offset="75%" stop-color="#92400e" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#040d1a" stop-opacity="0.85"/>
+    </linearGradient>
+
+    <!-- Distant Mountain Ridge -->
+    <linearGradient id="mountainGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <!-- Deep Skyline Buildings -->
+    <linearGradient id="deepSkylineGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a5f" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#091426" stop-opacity="1"/>
+    </linearGradient>
+
+    <!-- Midground Skyline -->
+    <linearGradient id="midSkylineGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#14263f" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#050b16" stop-opacity="1"/>
+    </linearGradient>
+
+    <!-- Foreground Skyline -->
+    <linearGradient id="foreSkylineGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0b1728" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#02050b" stop-opacity="1"/>
+    </linearGradient>
+
+    <!-- Emerald Telemetry Horizon -->
+    <linearGradient id="emeraldGridGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#34d399" stop-opacity="0.75"/>
+      <stop offset="100%" stop-color="#06b6d4" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Sky Base -->
+  <rect width="100%" height="100%" fill="url(#skyGrad)"/>
+
+  <!-- Atmospheric Sunburst & Solar Flare Breaking Clouds -->
+  <circle cx="1250" cy="410" r="700" fill="url(#sunGlow)"/>
+
+  <!-- Cloud Banks / Stratosphere Strata -->
+  <g opacity="0.4" filter="blur(8px)">
+    <path d="M-100 320 Q 300 240, 700 310 T 1500 260 T 2100 300 L 2100 480 L -100 480 Z" fill="#334155"/>
+    <path d="M-50 360 Q 450 280, 950 340 T 1750 290 T 2150 350 L 2150 520 L -50 520 Z" fill="#1e293b"/>
+    <path d="M100 390 Q 600 330, 1100 370 T 1900 340 T 2200 380 L 2200 550 L 100 550 Z" fill="#475569" opacity="0.6"/>
+  </g>
+
+  <!-- Solar Light Rays Shafting Through Clouds -->
+  <g opacity="0.25">
+    <polygon points="1250,410 -200,1080 300,1080" fill="url(#sunGlow)"/>
+    <polygon points="1250,410 400,1080 900,1080" fill="url(#sunGlow)"/>
+    <polygon points="1250,410 1100,1080 1600,1080" fill="url(#sunGlow)"/>
+    <polygon points="1250,410 1700,1080 2300,1080" fill="url(#sunGlow)"/>
+  </g>
+
+  <!-- Distant Mountain Ranges (Background Atmospheric Anchor) -->
+  <polygon points="0,580 180,530 350,560 540,510 720,550 900,490 1080,540 1260,480 1440,530 1620,500 1800,550 1920,520 1920,800 0,800" fill="url(#mountainGrad)"/>
+
+  <!-- Distant Megacity Silhouette (Layer 1) -->
+  <g fill="url(#deepSkylineGrad)">
+    <rect x="40" y="550" width="35" height="250"/>
+    <rect x="90" y="520" width="50" height="280"/>
+    <rect x="155" y="490" width="40" height="310"/>
+    <polygon points="155,490 175,440 195,490"/>
+    <rect x="210" y="540" width="45" height="260"/>
+    <rect x="270" y="510" width="60" height="290"/>
+    <rect x="345" y="470" width="55" height="330"/>
+    <line x1="372" y1="470" x2="372" y2="400" stroke="#34d399" stroke-width="2" opacity="0.8"/>
+    <rect x="420" y="530" width="40" height="270"/>
+    <rect x="475" y="485" width="70" height="315"/>
+    <rect x="560" y="520" width="50" height="280"/>
+    <rect x="625" y="460" width="45" height="340"/>
+    <polygon points="625,460 647,380 670,460"/>
+    <rect x="685" y="510" width="80" height="290"/>
+    <rect x="780" y="490" width="50" height="310"/>
+    <rect x="845" y="450" width="65" height="350"/>
+    <rect x="925" y="500" width="40" height="300"/>
+    <rect x="980" y="470" width="85" height="330"/>
+    <rect x="1080" y="440" width="55" height="360"/>
+    <line x1="1107" y1="440" x2="1107" y2="360" stroke="#38bdf8" stroke-width="2" opacity="0.8"/>
+    <rect x="1150" y="490" width="70" height="310"/>
+    <rect x="1235" y="430" width="60" height="370"/>
+    <polygon points="1235,430 1265,350 1295,430"/>
+    <rect x="1310" y="480" width="75" height="320"/>
+    <rect x="1400" y="460" width="50" height="340"/>
+    <rect x="1465" y="500" width="65" height="300"/>
+    <rect x="1545" y="450" width="80" height="350"/>
+    <rect x="1640" y="480" width="55" height="320"/>
+    <rect x="1710" y="510" width="70" height="290"/>
+    <rect x="1795" y="470" width="60" height="330"/>
+    <rect x="1870" y="530" width="50" height="270"/>
+  </g>
+
+  <!-- Urban Atmospheric Inversion / Smog Haze Blanket -->
+  <rect x="0" y="520" width="1920" height="320" fill="url(#hazeGrad)"/>
+
+  <!-- Midground Dense Urban Core (Layer 2) -->
+  <g fill="url(#midSkylineGrad)">
+    <rect x="0" y="620" width="80" height="300"/>
+    <rect x="95" y="580" width="75" height="340"/>
+    <rect x="185" y="550" width="90" height="370"/>
+    <rect x="290" y="600" width="85" height="320"/>
+    <rect x="390" y="540" width="110" height="380"/>
+    <polygon points="390,540 445,470 500,540"/>
+    <rect x="520" y="590" width="95" height="330"/>
+    <rect x="630" y="560" width="120" height="360"/>
+    <rect x="765" y="520" width="90" height="400"/>
+    <line x1="810" y1="520" x2="810" y2="440" stroke="#10b981" stroke-width="3"/>
+    <rect x="870" y="570" width="105" height="350"/>
+    <rect x="990" y="530" width="130" height="390"/>
+    <rect x="1135" y="510" width="95" height="410"/>
+    <polygon points="1135,510 1182,430 1230,510"/>
+    <rect x="1245" y="560" width="110" height="360"/>
+    <rect x="1370" y="540" width="85" height="380"/>
+    <rect x="1470" y="580" width="115" height="340"/>
+    <rect x="1600" y="530" width="90" height="390"/>
+    <rect x="1705" y="570" width="100" height="350"/>
+    <rect x="1820" y="610" width="100" height="310"/>
+  </g>
+
+  <!-- Glowing Urban Windows & Communication Beacons -->
+  <g fill="#fef08a" opacity="0.45">
+    <!-- Grid of micro windows -->
+    <circle cx="120" cy="620" r="1.5"/><circle cx="135" cy="620" r="1.5"/><circle cx="150" cy="620" r="1.5"/>
+    <circle cx="120" cy="640" r="1.5"/><circle cx="135" cy="640" r="1.5"/><circle cx="150" cy="640" r="1.5"/>
+    <circle cx="210" cy="580" r="1.5"/><circle cx="230" cy="580" r="1.5"/><circle cx="250" cy="580" r="1.5"/>
+    <circle cx="210" cy="600" r="1.5"/><circle cx="230" cy="600" r="1.5"/><circle cx="250" cy="600" r="1.5"/>
+    <circle cx="420" cy="570" r="2"/><circle cx="445" cy="570" r="2"/><circle cx="470" cy="570" r="2"/>
+    <circle cx="420" cy="600" r="2"/><circle cx="445" cy="600" r="2"/><circle cx="470" cy="600" r="2"/>
+    <circle cx="660" cy="590" r="1.5"/><circle cx="685" cy="590" r="1.5"/><circle cx="710" cy="590" r="1.5"/>
+    <circle cx="790" cy="550" r="2"/><circle cx="810" cy="550" r="2"/><circle cx="830" cy="550" r="2"/>
+    <circle cx="790" cy="580" r="2"/><circle cx="810" cy="580" r="2"/><circle cx="830" cy="580" r="2"/>
+    <circle cx="1020" cy="560" r="2"/><circle cx="1050" cy="560" r="2"/><circle cx="1080" cy="560" r="2"/>
+    <circle cx="1020" cy="590" r="2"/><circle cx="1050" cy="590" r="2"/><circle cx="1080" cy="590" r="2"/>
+    <circle cx="1160" cy="540" r="2"/><circle cx="1182" cy="540" r="2"/><circle cx="1205" cy="540" r="2"/>
+    <circle cx="1400" cy="570" r="1.5"/><circle cx="1425" cy="570" r="1.5"/>
+    <circle cx="1630" cy="560" r="2"/><circle cx="1655" cy="560" r="2"/>
+  </g>
+
+  <!-- Glowing Warning Beacons on Towers (Blinking Red / Emerald) -->
+  <circle cx="372" cy="400" r="3" fill="#ef4444" opacity="0.9"/>
+  <circle cx="647" cy="380" r="3" fill="#ef4444" opacity="0.9"/>
+  <circle cx="810" cy="440" r="3.5" fill="#10b981" opacity="0.95"/>
+  <circle cx="1107" cy="360" r="3" fill="#38bdf8" opacity="0.9"/>
+  <circle cx="1182" cy="430" r="3.5" fill="#10b981" opacity="0.95"/>
+  <circle cx="1265" cy="350" r="3" fill="#ef4444" opacity="0.9"/>
+
+  <!-- Foreground Cityscape Mass (Layer 3) -->
+  <g fill="url(#foreSkylineGrad)">
+    <polygon points="0,700 120,670 260,710 420,660 580,720 740,650 920,700 1100,640 1280,710 1460,670 1640,720 1820,680 1920,710 1920,1080 0,1080"/>
+  </g>
+
+  <!-- Clean Atmospheric Telemetry Laser Line / Planetary Horizon -->
+  <rect x="0" y="700" width="1920" height="2" fill="url(#emeraldGridGrad)"/>
+
+  <!-- Lower Cinematic Gradient Vignette -->
+  <rect x="0" y="650" width="1920" height="430" fill="url(#foreSkylineGrad)" opacity="0.88"/>
+</svg>

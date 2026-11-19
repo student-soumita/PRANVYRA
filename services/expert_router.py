@@ -23,12 +23,15 @@ EXPERT_ROLES = {
             "wind", "temperature", "humidity", "fog", "particulate", "pollution level", "air quality index",
             "ppm", "ug/m3", "boundary layer", "stagnation", "photochemical", "why is pollution", "air today",
             "toxic air", "smoke outside", "dust storm", "satellite", "cams", "monitoring station",
+            "precaution", "precautions", "unhealthy", "mask", "masks", "protection", "safe outdoor", "health effect",
             # Hindi
             "हवा", "वायु", "प्रदूषण", "एक्यूआई", "धुंध", "तापमान", "नमी", "हवा की गति", "धुआं",
             "सल्फर", "नाइट्रोजन", "कण", "पार्टिकुलेट", "मौसम", "बढ़ रहा है", "खराब हवा",
+            "सावधानी", "सावधानियां", "बचाव", "सुरक्षा", "मास्क", "खराब", "स्वास्थ्य",
             # Bengali
             "বাতাস", "বায়ু", "দূষণ", "কুয়াশা", "তাপমাত্রা", "আর্দ্রতা", "বায়ুর মান", "বাতাসের মান",
-            "ধোঁয়াশা", "কণা", "নাইট্রোজেন", "ওজোন", "খারাপ বাতাস"
+            "ধোঁয়াশা", "কণা", "নাইট্রোজেন", "ওজোন", "খারাপ বাতাস",
+            "সতর্কতা", "সাবধানতা", "সুরক্ষা", "মাস্ক", "খারাপ", "অস্বাস্থ্যকর", "স্বাস্থ্য"
         ]
     },
     "urban_mobility_expert": {

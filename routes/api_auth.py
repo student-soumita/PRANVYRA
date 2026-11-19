@@ -76,7 +76,7 @@ def register():
             "success": True,
             "message": "Account created successfully. Welcome to PRANVYRA!",
             "user": user,
-            "redirect_url": "/"
+            "redirect_url": "/welcome"
         }), 201
 
     except Exception as e:
@@ -132,7 +132,7 @@ def login():
         "success": True,
         "message": "Sign in successful.",
         "user": user_info,
-        "redirect_url": "/"
+        "redirect_url": "/welcome"
     })
 
 @auth_bp.route("/logout", methods=["POST"])

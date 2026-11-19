@@ -106,6 +106,10 @@
           <i data-lucide="book-open"></i>
           <span data-i18n="nav_pollution_guide">Pollution Guide</span>
         </a>
+        <a href="/welcome" class="nav-item">
+          <i data-lucide="sparkles"></i>
+          <span data-i18n="landing_tour_nav">Welcome Experience</span>
+        </a>
       </nav>
 
       <div class="sidebar-footer">
@@ -636,6 +640,14 @@
                 </div>
               </div>
               <div class="chat-header-actions">
+                <button class="btn btn-outline btn-sm btn-stop-all-speech" id="chatStopAllSpeechBtn" type="button" data-i18n-title="stop_all_speech" title="Stop All Speech" aria-label="Stop All Speech" style="display: none;">
+                  <i data-lucide="volume-x"></i>
+                  <span data-i18n="stop_all_speech">Stop All Speech</span>
+                </button>
+                <button class="btn btn-outline btn-sm btn-auto-speech" id="chatAutoSpeechToggle" type="button" data-i18n-title="voice_auto_read_toggle" title="Auto-read responses" aria-label="Auto-read responses" aria-pressed="false">
+                  <i data-lucide="volume-2" id="autoSpeechIcon"></i>
+                  <span data-i18n="voice_output">Voice</span>
+                </button>
                 <button class="btn btn-outline btn-sm" id="clearChatBtn" data-i18n-title="ai_clear_btn" title="Clear Conversation">
                   <i data-lucide="trash-2"></i>
                   <span data-i18n="ai_clear_btn">Clear</span>
@@ -683,8 +695,35 @@
               <span data-i18n="ai_typing_text">PRANVYRA Intelligence Core is analyzing environmental telemetry...</span>
             </div>
 
+            <!-- Voice Status & Live Speech Control Bar -->
+            <div class="voice-status-bar" id="voiceStatusBar" style="display: none;" role="status" aria-live="polite">
+              <div class="voice-status-content">
+                <div class="voice-wave-indicator" id="voiceWaveIndicator">
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                </div>
+                <span class="voice-status-text" id="voiceStatusText" data-i18n="listening">Listening...</span>
+              </div>
+              <div class="voice-status-actions" id="voiceStatusActions">
+                <button type="button" class="btn-voice-ctrl" id="voicePauseResumeBtn" style="display: none;" data-i18n-title="pause_speech" title="Pause Speech" aria-label="Pause Speech">
+                  <i data-lucide="pause" id="voicePauseResumeIcon"></i>
+                </button>
+                <button type="button" class="btn-voice-ctrl" id="voiceStopSpeakingBtn" style="display: none;" data-i18n-title="stop_speech" title="Stop Speech" aria-label="Stop Speech">
+                  <i data-lucide="square"></i>
+                </button>
+                <button type="button" class="btn-voice-ctrl btn-stop-rec" id="voiceStopListeningBtn" style="display: none;" data-i18n-title="stop_listening" title="Stop Listening" aria-label="Stop Listening">
+                  <i data-lucide="mic-off"></i>
+                </button>
+              </div>
+            </div>
+
             <!-- Input Row -->
             <div class="chat-input-row">
+              <button class="btn btn-icon chat-mic-btn" id="chatVoiceInputBtn" type="button" data-i18n-title="start_listening" data-i18n-aria="start_listening" aria-label="Start Voice Input" title="Start Voice Input">
+                <i data-lucide="mic" id="chatMicIcon"></i>
+              </button>
               <textarea id="chatInput" rows="1" data-i18n-placeholder="ai_input_placeholder" placeholder="Ask about air quality, commuting emissions, indoor ventilation, or sustainability..."></textarea>
               <button class="btn btn-primary chat-send-btn" id="chatSendBtn" data-i18n-aria="ai_send_btn" aria-label="Send Message">
                 <i data-lucide="send"></i>

@@ -89,12 +89,15 @@ window.PranvyraAPI = {
   },
 
   // 3. PRANVYRA Intelligence Core AI Assistant
-  async sendChatMessage(message, language = 'en', lat = null, lon = null, expertRole = 'auto') {
+  async sendChatMessage(message, language = null, lat = null, lon = null, expertRole = 'auto') {
+    const activeLang = language || 
+                       (window.PranvyraI18n && window.PranvyraI18n.currentLanguage) || 
+                       localStorage.getItem('pranvyra_lang') || 'en';
     return this.request('/api/assistant/chat', {
       method: 'POST',
       body: JSON.stringify({
         message,
-        language,
+        language: activeLang,
         lat,
         lon,
         expert_role: expertRole,

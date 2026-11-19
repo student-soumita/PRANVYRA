@@ -52,7 +52,10 @@ def test_live_server():
     assert "Your City Has an Air Story" in index_text, "Hero headline missing"
     assert "BreathRoute" in index_text, "BreathRoute navigation missing"
     assert "Life-Switch" in index_text, "Life-Switch navigation missing"
-    print("✓ 4. GET / returned 200 OK for authenticated session with full dashboard")
+    assert "chatVoiceInputBtn" in index_text, "Voice input mic button missing"
+    assert "voiceStatusBar" in index_text, "Voice status bar missing"
+    assert "chatAutoSpeechToggle" in index_text, "Auto speech toggle missing"
+    print("✓ 4. GET / returned 200 OK for authenticated session with full dashboard & Voice AI UI controls")
 
     # 5. Authenticated Environmental Overview
     r_dash = client.get("/api/dashboard/overview?lat=28.6139&lon=77.2090&city=New%20Delhi")

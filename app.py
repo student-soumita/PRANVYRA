@@ -75,6 +75,13 @@ def create_app():
             return redirect("/login")
         return render_template("index.html")
 
+    @app.route("/welcome")
+    def welcome_view():
+        user_id = session.get("user_id")
+        if not user_id:
+            return redirect("/login")
+        return render_template("welcome.html")
+
     @app.route("/login")
     def login_view():
         if session.get("user_id"):

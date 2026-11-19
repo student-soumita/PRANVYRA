@@ -33,7 +33,16 @@ def chat_with_assistant():
 
     data = request.get_json() or {}
     user_message = data.get("message", "").strip()
-    language = data.get("language") or user.get("language_pref") or "en"
+    req_lang = (data.get("language") or "").strip().lower()
+    if req_lang in ["en", "hi", "bn"]:
+        language = req_lang
+    elif session.get("language_pref") in ["en", "hi", "bn"]:
+        language = session.get("language_pref")
+    elif user and user.get("language_pref") in ["en", "hi", "bn"]:
+        language = user.get("language_pref")
+    else:
+        language = "en"
+    session["language_pref"] = language
     requested_role = data.get("expert_role", "auto")
     lat = data.get("lat") or user.get("latitude")
     lon = data.get("lon") or user.get("longitude")

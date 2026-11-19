@@ -352,9 +352,9 @@
             if (data.user && data.user.language_pref && window.PranvyraI18n) {
               window.PranvyraI18n.setLanguage(data.user.language_pref);
             }
-            // Parse next URL parameter
+            // Parse next URL parameter or default to post-login landing page
             const urlParams = new URLSearchParams(window.location.search);
-            const nextUrl = urlParams.get('next') || '/';
+            const nextUrl = urlParams.get('next') || data.redirect_url || '/welcome';
             setTimeout(() => {
               window.location.href = nextUrl;
             }, 600);
@@ -419,8 +419,10 @@
           const data = await res.json();
           if (res.ok && data.success) {
             showAlert(data.message || 'Account created successfully! Redirecting...', true);
+            const urlParams = new URLSearchParams(window.location.search);
+            const nextUrl = urlParams.get('next') || data.redirect_url || '/welcome';
             setTimeout(() => {
-              window.location.href = '/';
+              window.location.href = nextUrl;
             }, 800);
           } else {
             showAlert(data.error || 'Failed to create account.');
