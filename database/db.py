@@ -105,9 +105,9 @@ def init_db(reset=False):
         default_pw = hash_password("password123")
         cursor.execute(
             """INSERT INTO users (
-                email, username, password_hash, display_name, language_pref, city
-            ) VALUES (?, ?, ?, ?, ?, ?)""",
-            ("eco_test@pranvyra.org", "urban_eco_tester", default_pw, "Urban Eco Citizen", "en", "New Delhi")
+                email, username, password_hash, display_name, language_pref, city, latitude, longitude
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+            ("eco_test@pranvyra.org", "urban_eco_tester", default_pw, "Urban Eco Citizen", "en", "Select Your City", None, None)
         )
 
     conn.commit()

@@ -339,17 +339,16 @@ window.PranvyraApp = {
       return;
     }
 
-    window.PranvyraAPI.showToast('Requesting your location...', 'info');
+    window.PranvyraAPI.showToast('Detecting your location...', 'info');
 
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
         const lat = pos.coords.latitude;
         const lon = pos.coords.longitude;
 
-        // Reverse geocode via city search
         try {
           const res = await window.PranvyraAPI.searchCities(`${lat},${lon}`);
-          const cityName = (res && res.results && res.results.length > 0) ? res.results[0].name : 'My Location';
+          const cityName = (res && res.results && res.results.length > 0 && res.results[0].name) ? res.results[0].name : 'My Location';
           await this.setLocation(cityName, lat, lon);
           this.switchView('dashboard');
           window.location.hash = 'dashboard';
@@ -360,31 +359,42 @@ window.PranvyraApp = {
         }
       },
       (err) => {
-        window.PranvyraAPI.showToast('Location permission denied. Please enter your city manually.', 'warning');
+        let msg = 'Location permission denied. Please enter your city manually in the search box.';
+        if (err.code === 2) msg = 'Location unavailable. Please select your city manually.';
+        else if (err.code === 3) msg = 'Location request timed out. Please select your city manually.';
+        window.PranvyraAPI.showToast(msg, 'warning');
         console.warn("Geolocation error:", err);
       },
-      { enableHighAccuracy: true, timeout: 10000 }
+      { enableHighAccuracy: false, timeout: 12000, maximumAge: 60000 }
     );
   },
 
   // ===================== CITY SEARCH (TOPBAR) =====================
   bindCitySearch() {
+    const topbarWrap = document.getElementById('topbarLocationBtn');
     const toggleBtn = document.getElementById('citySearchToggleBtn');
     const flyout = document.getElementById('citySearchFlyout');
     const input = document.getElementById('citySearchInput');
     const resultsList = document.getElementById('cityResultsList');
 
-    if (toggleBtn && flyout) {
-      toggleBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        flyout.classList.toggle('open');
-        if (flyout.classList.contains('open') && input) {
-          input.focus();
-        }
+    const openFlyout = (e) => {
+      e.stopPropagation();
+      if (!flyout) return;
+      flyout.classList.toggle('open');
+      if (flyout.classList.contains('open') && input) {
+        setTimeout(() => input.focus(), 50);
+      }
+    };
+
+    if (topbarWrap && flyout) {
+      topbarWrap.addEventListener('click', (e) => {
+        // Prevent re-toggling when interacting with inside elements of flyout
+        if (flyout.contains(e.target)) return;
+        openFlyout(e);
       });
 
       document.addEventListener('click', (e) => {
-        if (!flyout.contains(e.target) && e.target !== toggleBtn) {
+        if (!flyout.contains(e.target) && !topbarWrap.contains(e.target)) {
           flyout.classList.remove('open');
         }
       });

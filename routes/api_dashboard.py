@@ -35,15 +35,14 @@ def get_dashboard_overview():
     current_lat = user.get("latitude")
     current_lon = user.get("longitude")
     
-    # If no coordinates are set, use calibrated benchmark coordinates (New Delhi)
-    # so the dashboard initializes with live atmospheric intelligence immediately
+    # If no coordinates are set, use calibrated benchmark coordinates for weather/AQI calculations,
+    # but DO NOT overwrite user's saved city in the returned profile unless explicitly saved
     is_benchmark_location = False
+    profile_response = dict(user)
     if current_lat is None or current_lon is None:
         from config import Config
         current_lat = Config.DEFAULT_LAT
         current_lon = Config.DEFAULT_LON
-        if not user.get("city") or user.get("city") == "Select Your City":
-            user["city"] = Config.DEFAULT_CITY
         is_benchmark_location = True
         
     # Fetch real live environmental data
@@ -62,7 +61,7 @@ def get_dashboard_overview():
         "success": True,
         "requires_location": False,
         "is_benchmark_location": is_benchmark_location,
-        "profile": user,
+        "profile": profile_response,
         "air_quality": aqi_data,
         "weather": weather_data,
         "airwise_action": airwise_action,

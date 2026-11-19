@@ -77,10 +77,48 @@ def get_live_weather(latitude=Config.DEFAULT_LAT, longitude=Config.DEFAULT_LON):
         "data_source": "PRANVYRA Calibrated Meteorological Model (Demo Mode)"
     }
 
+def reverse_geocode(latitude, longitude):
+    """Resolves latitude and longitude coordinates into a human-readable city name."""
+    try:
+        url = f"https://api.bigdatacloud.net/data/reverse-geocode-client?latitude={latitude}&longitude={longitude}&localityLanguage=en"
+        resp = requests.get(url, timeout=4)
+        if resp.status_code == 200:
+            data = resp.json()
+            city = data.get("city") or data.get("locality") or data.get("principalSubdivision") or "My Location"
+            country = data.get("countryName", "")
+            return {
+                "name": city,
+                "country": country,
+                "latitude": latitude,
+                "longitude": longitude
+            }
+    except Exception as e:
+        logger.warning(f"Reverse geocode lookup failed: {e}")
+    return {
+        "name": "My Location",
+        "country": "",
+        "latitude": latitude,
+        "longitude": longitude
+    }
+
 def search_cities(query, count=5):
-    """Searches geographic cities using Open-Meteo Geocoding API."""
+    """Searches geographic cities using Open-Meteo Geocoding API or handles coordinate lookups."""
     if not query or len(query.strip()) < 2:
         return []
+
+    q_clean = query.strip()
+    
+    # Check if query is latitude,longitude format (e.g. from browser geolocation: "22.57,88.36")
+    if "," in q_clean:
+        parts = q_clean.split(",")
+        if len(parts) == 2:
+            try:
+                lat = float(parts[0].strip())
+                lon = float(parts[1].strip())
+                resolved = reverse_geocode(lat, lon)
+                return [resolved]
+            except ValueError:
+                pass
     
     # Pre-canned prominent cities for instant matching or offline resilience
     KNOWN_CITIES = [
