@@ -98,6 +98,18 @@ def init_db(reset=False):
     # Perform safe non-destructive schema migration for existing databases
     migrate_db(conn)
 
+    # Seed default initial user for production environments (e.g. Render) if no users exist
+    cursor.execute("SELECT COUNT(*) FROM users")
+    if cursor.fetchone()[0] == 0:
+        from services.auth import hash_password
+        default_pw = hash_password("password123")
+        cursor.execute(
+            """INSERT INTO users (
+                email, username, password_hash, display_name, language_pref, city
+            ) VALUES (?, ?, ?, ?, ?, ?)""",
+            ("eco_test@pranvyra.org", "urban_eco_tester", default_pw, "Urban Eco Citizen", "en", "New Delhi")
+        )
+
     conn.commit()
     conn.close()
 
@@ -113,6 +125,7 @@ def migrate_db(conn):
     cursor.execute("PRAGMA table_info(users)")
     existing_user_cols = {row["name"] for row in cursor.fetchall()}
     user_col_defs = {
+        "username": "TEXT",
         "language_pref": "TEXT DEFAULT 'en'",
         "city": "TEXT DEFAULT 'Select Your City'",
         "latitude": "REAL",
