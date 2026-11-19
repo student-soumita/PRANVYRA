@@ -48,20 +48,13 @@ def clear_failed_attempts(identifier: str):
 
 def get_current_user_id():
     """
-    Retrieves the authenticated user ID from the server-side Flask session.
-    Also honors X-User-Id header for automated test harness compatibility.
+    Retrieves the authenticated user ID from the verified server-side Flask session.
+    Client-controlled headers (e.g. X-User-Id) are strictly ignored to prevent authentication bypass.
     """
     uid = session.get("user_id")
     if uid:
         try:
             return int(uid)
-        except (ValueError, TypeError):
-            pass
-            
-    header_uid = request.headers.get("X-User-Id")
-    if header_uid:
-        try:
-            return int(header_uid)
         except (ValueError, TypeError):
             pass
             

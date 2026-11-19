@@ -1,8 +1,13 @@
 import requests
 import logging
+import time
 from datetime import datetime, timezone
 
 logger = logging.getLogger(__name__)
+
+# Lightweight in-memory cache for environmental telemetry (5 min TTL)
+_AQI_CACHE = {}
+_AQI_CACHE_TTL = 300  # seconds
 
 # US EPA AQI Breakpoints for PM2.5 (µg/m³) and PM10 (µg/m³)
 # Formula: I = ((I_high - I_low) / (C_high - C_low)) * (C - C_low) + I_low
@@ -91,6 +96,7 @@ def get_live_air_quality(latitude, longitude):
     Fetches real-time atmospheric pollutant concentrations from Open-Meteo Air Quality API.
     Uses European Copernicus CAMS / ECMWF modeling with ground observation assimilation.
     Does NOT invent fake sensor readings if unreachable.
+    Includes safe 5-minute memory caching to avoid repeated API requests for identical coordinates.
     """
     if latitude is None or longitude is None:
         return {
@@ -100,6 +106,13 @@ def get_live_air_quality(latitude, longitude):
             "data_source": "Open-Meteo CAMS Global Model",
             "calculation_standard": "US EPA AQI Standard (40 CFR Part 58)"
         }
+
+    # Rounded coordinate key (~1.1 km precision)
+    cache_key = (round(float(latitude), 2), round(float(longitude), 2))
+    now = time.time()
+    cached = _AQI_CACHE.get(cache_key)
+    if cached and (now - cached["timestamp"] < _AQI_CACHE_TTL):
+        return cached["data"]
 
     api_url = "https://air-quality-api.open-meteo.com/v1/air-quality"
     params = {
@@ -139,7 +152,7 @@ def get_live_air_quality(latitude, longitude):
             hourly_pm25 = hourly.get("pm2_5", [])[:24]
             hourly_pm10 = hourly.get("pm10", [])[:24]
             
-            return {
+            result = {
                 "success": True,
                 "is_available": True,
                 "data_source": "Open-Meteo CAMS Global Atmospheric Model & Surface Observation Assimilation",
@@ -202,6 +215,9 @@ def get_live_air_quality(latitude, longitude):
                     "pm10": [round(float(v), 1) if v is not None else 0 for v in hourly_pm10]
                 }
             }
+            # Cache the successful telemetry
+            _AQI_CACHE[cache_key] = {"data": result, "timestamp": now}
+            return result
     except Exception as e:
         logger.warning(f"Live air quality fetch error for ({latitude}, {longitude}): {e}")
 

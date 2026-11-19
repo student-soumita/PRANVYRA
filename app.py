@@ -20,7 +20,10 @@ from routes.api_life_switch import life_switch_bp
 def create_app():
     app = Flask(__name__, static_folder="static", template_folder="templates")
     app.config.from_object(Config)
-    CORS(app)
+    
+    # Restrict CORS to configured origins (or wildcard in dev)
+    allowed_origins = Config.ALLOWED_ORIGINS if Config.ALLOWED_ORIGINS != ["*"] else "*"
+    CORS(app, origins=allowed_origins, supports_credentials=True)
     
     # Initialize DB schema & migrations
     with app.app_context():
@@ -47,17 +50,8 @@ def create_app():
         if request.path.startswith(public_prefixes) or request.path in ["/login", "/register", "/logout"]:
             return None
 
-        # Check authenticated session
+        # Check authenticated session strictly (no client-controlled bypass header)
         user_id = session.get("user_id")
-        if not user_id:
-            # Check X-User-Id header for test clients / programmatic API integration
-            header_uid = request.headers.get("X-User-Id")
-            if header_uid:
-                try:
-                    user_id = int(header_uid)
-                    session["user_id"] = user_id
-                except (ValueError, TypeError):
-                    pass
 
         if not user_id:
             if request.path.startswith("/api/") or request.is_json or "application/json" in request.headers.get("Accept", ""):
@@ -108,23 +102,14 @@ def create_app():
         return jsonify({"success": False, "error": "Internal server error"}), 500
         
     return app
-        
-    @app.errorhandler(404)
-    def not_found(e):
-        return jsonify({"success": False, "error": "Resource not found"}), 404
-        
-    @app.errorhandler(500)
-    def server_error(e):
-        return jsonify({"success": False, "error": "Internal server error"}), 500
-        
-    return app
 
 if __name__ == "__main__":
     app = create_app()
     port = int(os.environ.get("PORT", 5000))
+    is_debug = os.environ.get("FLASK_ENV") == "development" or os.environ.get("FLASK_DEBUG") == "1"
     print(f"\n=======================================================")
     print(f"  PRANVYRA - AI Urban Air Intelligence & Action Platform")
     print(f"  Every Breath. A Better Tomorrow.")
-    print(f"  Running on: http://127.0.0.1:{port}")
+    print(f"  Running on: http://127.0.0.1:{port} (Debug: {is_debug})")
     print(f"=======================================================\n")
-    app.run(host="0.0.0.0", port=port, debug=True)
+    app.run(host="0.0.0.0", port=port, debug=is_debug)

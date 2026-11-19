@@ -1,8 +1,13 @@
 import requests
 import logging
+import time
 from config import Config
 
 logger = logging.getLogger(__name__)
+
+# Lightweight in-memory cache for weather conditions (5 min TTL)
+_WEATHER_CACHE = {}
+_WEATHER_CACHE_TTL = 300  # seconds
 
 # WMO Weather interpretation codes (WW)
 WMO_WEATHER_CODES = {
@@ -31,7 +36,20 @@ def get_weather_desc(code):
     return WMO_WEATHER_CODES.get(code, ("Partly Cloudy", "cloud-sun"))
 
 def get_live_weather(latitude=Config.DEFAULT_LAT, longitude=Config.DEFAULT_LON):
-    """Fetches real-time meteorological conditions from Open-Meteo Weather API."""
+    """
+    Fetches real-time meteorological conditions from Open-Meteo Weather API.
+    Includes safe 5-minute memory caching to prevent redundant external API hits.
+    """
+    if latitude is None or longitude is None:
+        latitude = Config.DEFAULT_LAT
+        longitude = Config.DEFAULT_LON
+
+    cache_key = (round(float(latitude), 2), round(float(longitude), 2))
+    now = time.time()
+    cached = _WEATHER_CACHE.get(cache_key)
+    if cached and (now - cached["timestamp"] < _WEATHER_CACHE_TTL):
+        return cached["data"]
+
     params = {
         "latitude": latitude,
         "longitude": longitude,
@@ -47,7 +65,7 @@ def get_live_weather(latitude=Config.DEFAULT_LAT, longitude=Config.DEFAULT_LON):
             w_code = current.get("weather_code", 0)
             desc, icon = get_weather_desc(w_code)
             
-            return {
+            result = {
                 "success": True,
                 "is_fallback": False,
                 "temperature": round(float(current.get("temperature_2m", 24.0)), 1),
@@ -58,8 +76,11 @@ def get_live_weather(latitude=Config.DEFAULT_LAT, longitude=Config.DEFAULT_LON):
                 "weather_code": w_code,
                 "weather_desc": desc,
                 "weather_icon": icon,
+                "is_day": current.get("is_day", 1),
                 "data_source": "Open-Meteo High-Resolution Weather API"
             }
+            _WEATHER_CACHE[cache_key] = {"data": result, "timestamp": now}
+            return result
     except Exception as e:
         logger.warning(f"Live weather API fetch failed: {e}. Using calibrated fallback.")
         

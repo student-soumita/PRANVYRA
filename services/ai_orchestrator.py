@@ -186,7 +186,10 @@ def process_chat_query(user_message, visitor_id="anonymous", requested_role="aut
             
             # Format prompt with context & history
             formatted_input = build_gemini_prompt(user_message, context, multi_roles, lang)
-            response = model.generate_content(formatted_input)
+            response = model.generate_content(
+                formatted_input,
+                request_options={"timeout": 15}
+            )
             
             if response and response.text:
                 ai_response = parse_gemini_response(response.text, lang, primary_role)

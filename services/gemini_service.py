@@ -82,7 +82,10 @@ ENVIRONMENTAL CONTEXT:
 - Data Source: {aqi_context.get('data_source', 'Open-Meteo CAMS Global Model')}
 """
             full_prompt = f"{context_str}\n\nUSER QUESTION:\n{user_message}"
-            response = model.generate_content(full_prompt)
+            response = model.generate_content(
+                full_prompt,
+                request_options={"timeout": 15}
+            )
             if response and response.text:
                 return parse_ai_output(response.text, lang)
         except Exception as e:

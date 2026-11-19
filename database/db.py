@@ -10,9 +10,10 @@ from config import Config
 
 def get_db_connection():
     os.makedirs(os.path.dirname(Config.DATABASE_PATH), exist_ok=True)
-    conn = sqlite3.connect(Config.DATABASE_PATH)
+    conn = sqlite3.connect(Config.DATABASE_PATH, timeout=20.0)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON")
+    conn.execute("PRAGMA busy_timeout = 5000")
     return conn
 
 def init_db(reset=False):
@@ -98,11 +99,14 @@ def init_db(reset=False):
     # Perform safe non-destructive schema migration for existing databases
     migrate_db(conn)
 
-    # Seed default initial user for production environments (e.g. Render) if no users exist
+    # Seed initial test account with secure random password if no users exist
     cursor.execute("SELECT COUNT(*) FROM users")
     if cursor.fetchone()[0] == 0:
+        import secrets
         from services.auth import hash_password
-        default_pw = hash_password("password123")
+        # Generate high-entropy credential or read from environment
+        seed_pw = os.getenv("SEED_USER_PASSWORD") or secrets.token_urlsafe(16)
+        default_pw = hash_password(seed_pw)
         cursor.execute(
             """INSERT INTO users (
                 email, username, password_hash, display_name, language_pref, city, latitude, longitude
