@@ -10,6 +10,10 @@ window.PranvyraMap = {
     const mapEl = document.getElementById('airQualityMap');
     if (!mapEl || this.map) return;
 
+    // Guard against null, undefined, NaN, or non-numeric values
+    lat = (lat !== null && lat !== undefined && !isNaN(Number(lat))) ? Number(lat) : 28.6139;
+    lon = (lon !== null && lon !== undefined && !isNaN(Number(lon))) ? Number(lon) : 77.2090;
+
     try {
       this.map = L.map('airQualityMap', {
         center: [lat, lon],
@@ -33,7 +37,16 @@ window.PranvyraMap = {
   updateLocation(lat, lon, aqi = 168) {
     if (!this.map) return;
 
-    this.map.setView([lat, lon], 12);
+    // Guard against null, undefined, NaN, or non-numeric values
+    lat = (lat !== null && lat !== undefined && !isNaN(Number(lat))) ? Number(lat) : 28.6139;
+    lon = (lon !== null && lon !== undefined && !isNaN(Number(lon))) ? Number(lon) : 77.2090;
+
+    try {
+      this.map.setView([lat, lon], 12);
+    } catch (err) {
+      console.warn("Map setView failed:", err);
+      return;
+    }
 
     if (this.userMarker) {
       this.map.removeLayer(this.userMarker);

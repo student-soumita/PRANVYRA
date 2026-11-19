@@ -44,6 +44,9 @@ def get_dashboard_overview():
         current_lat = Config.DEFAULT_LAT
         current_lon = Config.DEFAULT_LON
         is_benchmark_location = True
+        # Provide fallback coordinates to profile_response so frontend child components (Leaflet, Air-Twin) have valid numbers
+        profile_response["latitude"] = current_lat
+        profile_response["longitude"] = current_lon
         
     # Fetch real live environmental data
     aqi_data = get_live_air_quality(current_lat, current_lon)

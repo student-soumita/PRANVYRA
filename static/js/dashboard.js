@@ -214,10 +214,14 @@ window.PranvyraDashboard = {
 
     // 8. Leaflet Map
     if (window.PranvyraMap && profile) {
+      const mapLat = (profile.latitude !== null && profile.latitude !== undefined && !isNaN(Number(profile.latitude))) ? Number(profile.latitude) : 28.6139;
+      const mapLon = (profile.longitude !== null && profile.longitude !== undefined && !isNaN(Number(profile.longitude))) ? Number(profile.longitude) : 77.2090;
+      const currentAqi = (aqi && typeof aqi.aqi === 'number') ? aqi.aqi : 50;
+
       if (!window.PranvyraMap.map) {
-        window.PranvyraMap.init(profile.latitude, profile.longitude, aqi ? aqi.aqi : 50);
+        window.PranvyraMap.init(mapLat, mapLon, currentAqi);
       } else {
-        window.PranvyraMap.updateLocation(profile.latitude, profile.longitude, aqi ? aqi.aqi : 50);
+        window.PranvyraMap.updateLocation(mapLat, mapLon, currentAqi);
       }
     }
 
