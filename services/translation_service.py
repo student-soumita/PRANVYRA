@@ -325,6 +325,6 @@ def translate_assistant_payload(text: str, card: dict, target_lang: str) -> dict
             "success": False,
             "text": text,
             "card": card,
-            "error": str(e),
+            "has_mismatch": True,
             "language": target_lang
         }

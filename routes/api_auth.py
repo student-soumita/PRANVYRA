@@ -1,4 +1,5 @@
 import re
+import logging
 from flask import Blueprint, request, jsonify, session
 from database.db import (
     get_user_by_email,
@@ -17,6 +18,7 @@ from services.auth import (
 )
 
 auth_bp = Blueprint("auth", __name__)
+logger = logging.getLogger(__name__)
 
 EMAIL_REGEX = re.compile(r"^[\w\.-]+@[\w\.-]+\.\w+$")
 
@@ -80,7 +82,8 @@ def register():
         }), 201
 
     except Exception as e:
-        return jsonify({"success": False, "error": f"Failed to register account: {str(e)}"}), 500
+        logger.error(f"Registration error for {email}: {e}", exc_info=True)
+        return jsonify({"success": False, "error": "Registration failed due to a server error. Please try again."}), 500
 
 @auth_bp.route("/login", methods=["POST"])
 def login():
